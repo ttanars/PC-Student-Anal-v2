@@ -1,0 +1,1794 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PC|ระบบวิเคราะห์ผู้เรียนรายบุคคล v1 </title> <link rel="shortcut icon" type="image/png" href="https://img2.pic.in.th/pic/Pakchong_School-removebg-preview.png">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css"/>
+    <link href='https://fonts.googleapis.com/css?family=Itim|Kanit|Mali|Mitr|Niramit|Pattaya|Prompt|Questrial|Sarabun|Sriracha' rel='stylesheet' type='text/css'>
+    <link href="https://fonts.googleapis.com/css2?family=Niramit:wght@400&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <link href="https://cdn.datatables.net/1.13.1/css/jquery.dataTables.min.css" rel="stylesheet" type="text/css">
+    <link href="https://cdn.datatables.net/responsive/2.4.0/css/responsive.dataTables.min.css" rel="stylesheet" type="text/css">
+    <script src="https://code.jquery.com/jquery-3.6.1.js"></script>
+    <script src="https://cdn.datatables.net/1.13.1/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/responsive/2.4.0/js/dataTables.responsive.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+	
+	<link rel="stylesheet" href="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dist/jquery.Thailand.min.css">
+	
+	<style>
+	
+		.swal2-popup .swal2-input,
+        .swal2-popup .swal2-file,
+        .swal2-popup .swal2-textarea {
+            width: auto !important; /* หรือค่าอื่นที่เหมาะสม */
+            max-width: 100%; /* เพิ่มเติมเพื่อให้แน่ใจว่าไม่เกินกรอบ */
+        }
+	
+	
+	
+        /* --- Base Styles --- */
+        :root {
+            --primary-color: #0413de; --secondary-color: #f23591; --background-color: #fefae0;
+            --text-color: #333; --input-bg: #ffffff; --border-color: #d4d4d4; --button-bg: #0800f7;
+            --button-hover-bg: #f700d6; --prev-button-bg: #f7630c; --prev-button-hover-bg: #0800f7;
+            --step-inactive-bg: #ced4da; --step-active-bg: var(--primary-color); --step-completed-bg: var(--secondary-color);
+            --step-line-color: #e0e0e0; --danger-color: #e63946; --success-color: #2a9d8f; --warning-color: #fca311;
+            --loading-color: #6c757d; --progress-bar-bg: #6faafc; --info-color: #118ab2; --light-grey: #f8f9fa;
+
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: 'Niramit', sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.6; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 20px; }
+        .main-container { background-color: var(--input-bg); padding: 20px 30px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); width: 100%; max-width: 1000px; /* Wider container */ border: 1px solid var(--border-color); margin-bottom: 20px; }
+        .navigation-buttons { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; }
+        .nav-button { padding: 10px 20px; font-size: 1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: background-color 0.3s ease, transform 0.1s ease; border: 1px solid var(--secondary-color); background-color: white; color: var(--secondary-color); }
+        .nav-button.active { background-color: var(--secondary-color); color: white; transform: translateY(-2px); }
+        .nav-button:not(.active):hover { background-color: #e0f7fa; }
+        .form-container { display: none; } #dashboard-container { display: block; }
+        .dashboard-header { text-align: center; margin-bottom: 25px; background-color : #fcff63; color:#0a0a0a; font-size: 1.7em; font-mt-5; font-mb-5; font-weight: 600; border-bottom: 2px solid var(--step-line-color); padding-bottom: 5px; padding-top: 5px; margin-top: 5px; margin-bottom: 5px;}
+        .dashboard-cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 15px; margin-bottom: 30px; }
+        .dashboard-card { padding: 15px; border-radius: 10px; color: white; text-align: center; box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); transition: transform 0.2s ease; }
+        .dashboard-card:hover { transform: translateY(-3px); } .dashboard-card h3 { font-size: 1.6em; margin-bottom: 8px; font-weight: 600; } .dashboard-card .count { font-size: 1.9em; font-weight: bold; display: block; padding-bottom: 0px; padding-top: 0px; }
+        .card-m1 { background-color: #ef476f; } .card-m2 { background-color: #312080; } .card-m3 { background-color: #06d6a0; } .card-m4 { background-color: #118ab2; } .card-m5 { background-color: #073b4c; } .card-m6 { background-color: #fca311; } .card-total { background-color: #6c757d; }
+        .datatable-container { margin-top: 20px; padding-top: 20px; border-top: 1px solid var(--border-color); position: relative; min-height: 100px; }
+        #studentDataTable { width: 100%; }
+        .loading-overlay { position: absolute; top: 0; left: 0; right: 0; bottom: 0; background: rgba(255, 255, 255, 0.7); z-index: 10; display: flex; justify-content: center; align-items: center; color: var(--secondary-color); font-size: 1.2em; font-weight: bold; border-radius: 0 0 10px 10px; }
+        .loading-overlay.hidden { display: none; }
+        .status-btn, .action-btn { padding: 5px 10px; border-radius: 5px; color: white; font-size: 0.85em; border: none; cursor: pointer; min-width: 85px; text-align: center; margin: 2px; display: inline-block; vertical-align: middle; /* Align buttons */ }
+        .status-recorded { background-color: var(--success-color); cursor: default; }
+        .status-not-recorded { background-color: var(--warning-color); }
+        .status-not-recorded:hover { background-color: #e69500; }
+        .action-view-btn { background-color: var(--info-color); }
+        .action-view-btn:hover { background-color: #0d6efd; }
+        .action-pdf-btn { background-color: var(--danger-color); }
+        .action-pdf-btn:hover { background-color: #dc3545; }
+        .action-pdf-btn:disabled { background-color: #bbbbbb; cursor: not-allowed; } /* Style for disabled PDF button */
+        .status-waiting-text { font-size: 0.85em; color: var(--loading-color); font-style: italic; } /* Style for 'รอข้อมูล' text */
+        .student-image { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; display: block; margin: 0 auto; cursor: pointer; transition: transform 0.2s ease-in-out; border: 1px solid #eee; }
+        .student-image:hover { transform: scale(1.9); box-shadow: 0 0 10px rgba(0,0,0,0.3); }
+		
+        /* --- Form Styles (Keep previous styles) --- */
+        h1 { text-align: center; margin-bottom: 15px; padding-bottom: 5px; padding-top: 5px; font-size: 1.6em; font-weight: 600; color: #10181a; }
+        h2 { color: var(--secondary-color); margin-bottom: 2px; border-bottom: 2px solid var(--step-line-color); padding-bottom: 10px; font-size: 1.2em; font-weight: 600; }
+		h3 { margin-bottom: 0px; border-bottom: 2px solid var(--step-line-color); padding-bottom: 10px; font-size: 20px; font-weight: 300; }
+		h4 { margin-bottom: 0px; border-bottom: 2px solid var(--step-line-color); padding-bottom: 2px; font-size: 1.0em; font-weight: 300; }
+		h5 { margin-bottom: 0px; padding-bottom: 0px; font-size: 1.5em; font-weight: 800; }
+		h6 { margin-bottom: 0px; padding-bottom: 2px; font-size: 1.0em; font-weight: 300; }
+		h7 { margin-top: -10px; padding-bottom: 0px; font-size: 1.2em; font-weight: 600; }
+		
+        .progress-container { margin-top: 15px; margin-bottom: 35px; }
+        .step-indicator-container { display: flex; justify-content: space-between; align-items: center; position: relative; padding: 0 10px; }
+        .step-indicator-container::before { content: ''; position: absolute; top: 50%; left: 0; right: 0; height: 3px; background-color: var(--step-line-color); transform: translateY(-50%); z-index: 1; width: calc(100% - 40px); margin: 0 auto; }
+        .step-circle { width: 35px; height: 35px; border-radius: 50%; background-color: var(--step-inactive-bg); color: white; display: flex; justify-content: center; align-items: center; font-weight: 600; font-size: 1rem; z-index: 2; position: relative; border: 3px solid var(--input-bg); transition: background-color 0.3s ease; }
+        .step-circle.completed { background-color: var(--step-completed-bg); } .step-circle.active { background-color: var(--step-active-bg); transform: scale(1.1); box-shadow: 0 0 8px rgba(142, 202, 230, 0.7); }
+        .progress-bar-container { width: 100%; height: 12px; background-color: var(--progress-bar-bg); border-radius: 6px; overflow: hidden; margin-bottom: 8px; }
+        .progress-bar-fill { height: 100%; width: 0%; background-color: var(--secondary-color); border-radius: 6px; transition: width 0.4s ease-in-out; }
+        #progress-text { text-align: center; font-size: 0.9em; font-weight: 600; color: var(--secondary-color); }
+        .form-step { display: none; animation: fadeIn 0.5s ease-in-out; } .form-step.active { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .form-group { margin-bottom: 22px; position: relative; } label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 1rem; color: #444; }
+        .radio-group label { display: inline-flex; align-items: center; margin-right: 15px; margin-bottom: 5px; font-weight: normal; cursor: pointer; } .radio-group input[type="radio"] { margin-right: 8px; accent-color: var(--secondary-color); transform: scale(1.1); cursor: pointer; }
+        input[type="text"], input[type="number"], select, textarea { width: 100%; padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 8px; background-color: #fcfcfc; font-size: 1rem; font-family: inherit; transition: border-color 0.3s ease, box-shadow 0.3s ease; }
+        input[type="text"]:focus, input[type="number"]:focus, select:focus, textarea:focus { outline: none; border-color: var(--primary-color); box-shadow: 0 0 0 3px rgba(142, 202, 230, 0.3); }
+        input[readonly] { background-color: #e9ecef; cursor: not-allowed; opacity: 0.8; }
+        input.invalid, select.invalid, textarea.invalid, .form-group.invalid input, .form-group.invalid select, .form-group.invalid textarea { border-color: var(--danger-color) !important; }
+        .form-group.invalid label, .form-group.invalid .radio-group label, .form-group.invalid .checkbox-group label { color: var(--danger-color); }
+        input[type="radio"].invalid { outline: 1px solid var(--danger-color); }
+        .error-message { font-size: 0.8em; margin-top: 6px; display: none; color: var(--danger-color); }
+        textarea { resize: vertical; min-height: 110px; }
+        .button-group { display: flex; justify-content: space-between; margin-top: 35px; }
+        button:not(.nav-button):not(.status-btn):not(.action-btn) { padding: 12px 28px; border: none; border-radius: 8px; color: white; font-size: 1.05rem; font-weight: 600; font-family: inherit; cursor: pointer; transition: background-color 0.3s ease, transform 0.1s ease; min-width: 110px; }
+        button:not(.nav-button):not(.status-btn):not(.action-btn):hover { transform: translateY(-2px); }
+        button:not(.nav-button):not(.status-btn):not(.action-btn):active { transform: scale(0.98) translateY(-1px); }
+        .next-btn, button[type="submit"] { background-color: var(--button-bg); } .next-btn:hover, button[type="submit"]:hover { background-color: var(--button-hover-bg); }
+        .prev-btn { background-color: var(--prev-button-bg); } .prev-btn:hover { background-color: var(--prev-button-hover-bg); }
+        button:disabled:not(.status-recorded):not(.action-pdf-btn) { background-color: #cccccc; cursor: not-allowed; transform: none; opacity: 0.7; } /* Exclude pdf disabled style */
+        .checkbox-group label { display: flex; align-items: center; margin-bottom: 12px; font-weight: normal; cursor: pointer; } .checkbox-group input[type="checkbox"] { width: auto; margin-right: 12px; accent-color: var(--secondary-color); transform: scale(1.15); cursor: pointer; }
+		.banner img { width: 100%; max-height: 260px; object-fit: cover; border-radius: 10px; margin-bottom: 12px; display: block; background-color: #eee; border: 1px solid var(--border-color); }
+        #loadingMessage, #successMessage, #errorMessage { display: none; text-align: center; margin-top: 20px; }
+        @keyframes shake { 10%, 90% { transform: translate3d(-1px, 0, 0); } 20%, 80% { transform: translate3d(2px, 0, 0); } 30%, 50%, 70% { transform: translate3d(-4px, 0, 0); } 40%, 60% { transform: translate3d(4px, 0, 0); } }
+        .shake { animation: shake 0.5s cubic-bezier(.36,.07,.19,.97) both; }
+		
+        /* --- New Styles for Popups and Print --- */
+        .swal2-popup .swal2-html-container { margin: 1em 1em 0.3em !important; } /* Adjust SweetAlert padding */
+        .image-modal-content { max-width: 90vw; max-height: 80vh; display: block; margin: auto; } /* Image modal style */
+        .data-popup-content { text-align: left; font-size: 0.95em; max-height: 75vh; overflow-y: auto; padding-right: 15px; /* Add padding for scrollbar */ }
+        .data-popup-header { display: flex; align-items: center; margin-bottom: 20px; padding-bottom: 15px; border-bottom: 1px solid var(--step-line-color); }
+        .data-popup-header img { width: 80px; height: 80px; border-radius: 50%; object-fit: cover; margin-right: 20px; border: 2px solid var(--border-color); }
+        .data-popup-header h3 { color: var(--secondary-color); margin: 0; font-size: 1.3em; }
+        .data-popup-content h4 { color: var(--secondary-color); border-bottom: 1px solid var(--step-line-color); padding-bottom: 5px; margin-top: 20px; margin-bottom: 10px; font-size: 1.1em; font-weight: 600; }
+        .data-popup-content dl { margin-bottom: 15px; display: grid; grid-template-columns: 180px auto; gap: 5px 10px; }
+        .data-popup-content dt { font-weight: 600; color: #555; grid-column: 1 / 2; }
+        .data-popup-content dd { grid-column: 2 / 3; margin: 0; }
+        .data-popup-actions { margin-top: 25px; text-align: right; padding-top: 15px; border-top: 1px solid var(--step-line-color);}
+        .data-popup-actions button { margin-left: 10px; padding: 8px 15px; }
+		
+        /* Print Styles */
+        @media print {
+            body * { visibility: hidden; }
+            #printable-data-area, #printable-data-area * { visibility: visible; }
+            #printable-data-area { position: absolute; left: 0; top: 0; width: 100%; margin: 0 !important; padding: 10px !important; font-size: 10pt !important; border: none !important; }
+            .swal2-container, .swal2-popup, .swal2-actions, .swal2-close, .swal2-header { display: none !important; }
+            .data-popup-actions { display: none !important; }
+            .data-popup-content dl { grid-template-columns: 150px auto; } /* Adjust layout for print */
+            .data-popup-header img { width: 60px; height: 60px; margin-right: 15px; }
+            a[href]:after { content: none !important; }
+            img { max-width: 100% !important; page-break-inside: avoid; }
+            h3, h4 { page-break-after: avoid; } dl { page-break-inside: avoid; }
+        }
+
+
+		.datatable-container {
+    /* ... CSS เดิม ... */
+    width: 100%; /* หรือตรวจสอบว่าถูกกำหนดจาก parent element อย่างถูกต้อง */
+    overflow-x: hidden; /* หากไม่ต้องการให้มี scrollbar แนวนอนเลย */
+    /* หรือ overflow-x: auto; หากต้องการให้มี scrollbar เมื่อจำเป็นจริงๆ */
+}
+    </style>
+</head>
+<body>
+
+
+<div class="container">
+<div class="card shadow-sm border-primary position-relative">
+  <div class="card-body p-3 p-md-4">
+ <div class="banner">
+                 <img src="https://lh5.googleusercontent.com/d/1LZ75bH7Ucvyh83fNjAD69obNOLur09g_" alt="Form Banner"> </div>
+ 
+	<div class="container-fluid text-center mt-0 mb-0 main-nav btn-group shadow-sm flex-wrap" role="group" aria-label="Main Navigation" id="nav"> 
+	<div class="container  mb-2">
+        <button id="nav-dashboard-btn" type = "button" class="btn btn-primary btn-sm mt-1 mb-1 me-1" onclick="showView('dashboard')">Dashboard</button>
+        <button id="nav-form-btn" type = "button" class="btn btn-success btn-sm btn-xl mt-1 mb-1 me-1 active" onclick="showView('form')">แบบฟอร์มบันทึกข้อมูล</button>
+		<button id="nav-logout-btn" type="button" class="btn btn-danger btn-sm mt-1 mb-1" style="display:none;" onclick="logoutTeacher()">ออกจากระบบ</button>
+	</div>
+    </div> 
+				 
+				 
+				 
+        <div id="dashboard-container">
+             <h5 class="dashboard-header mt-1 mb-1">Dashboard สรุปข้อมูลนักเรียน</h5>
+             <div class="dashboard-cards position-relative">
+                 <div class="dashboard-card card-m1"><h3>ม.1</h3><span class="count" id="count-m1">0</span></div>
+                 <div class="dashboard-card card-m2"><h3>ม.2</h3><span class="count" id="count-m2">0</span></div>
+                 <div class="dashboard-card card-m3"><h3>ม.3</h3><span class="count" id="count-m3">0</span></div>
+                 <div class="dashboard-card card-m4"><h3>ม.4</h3><span class="count" id="count-m4">0</span></div>
+                 <div class="dashboard-card card-m5"><h3>ม.5</h3><span class="count" id="count-m5">0</span></div>
+                 <div class="dashboard-card card-m6"><h3>ม.6</h3><span class="count" id="count-m6">0</span></div>
+                 <div class="dashboard-card card-total"><h3>รวมบันทึกแล้ว</h3><span class="count" id="count-total">0</span></div>
+             </div>
+             <div class="datatable-container">
+                  <div id="loadingOverlay" class="loading-overlay hidden"><i class="fas fa-spinner fa-spin"></i>&nbsp;&nbsp;กำลังโหลดข้อมูล...</div>
+				  
+			<div class="row mb-3">
+				<div class="col-md-6">
+					<label for="filterClass" class="form-label">กรองตามห้อง:</label>
+					<select id="filterClass" class="form-select form-select-sm">
+						<option value="">ทั้งหมด</option>
+						</select>
+				</div>
+				<div class="col-md-6">
+					<label for="filterStatus" class="form-label">กรองตามสถานะ:</label>
+					<select id="filterStatus" class="form-select form-select-sm">
+						<option value="">ทั้งหมด</option>
+						<option value="บันทึกแล้ว">บันทึกแล้ว</option>
+						<option value="ยังไม่บันทึก">ยังไม่บันทึก</option>
+					</select>
+				</div>
+			</div>
+				  
+				  
+				  
+				  
+				  
+                 <!--<h3>รายชื่อนักเรียนทั้งหมด (เรียงตามการบันทึกล่าสุด)</h3>-->
+                 <table id="studentDataTable" class="display responsive nowrap" style="width:100%">
+                     <thead>
+                         <tr>
+                             <th>ที่</th>
+                             <th>รูป</th>
+                             <th>ชื่อ-สกุล</th>
+                             <th>ชั้น</th>
+                             <th>เลขที่</th>
+                             <th>สถานะ</th>
+                             <th>ข้อมูล</th>
+                             <th>บันทึกเมื่อ</th> </tr>
+                     </thead>
+                     <tbody></tbody>
+                 </table>
+             </div>
+        </div>
+
+        <div class="form-container">
+		
+             <!--<h1>ระบบวิเคราะห์ผู้เรียนรายบุคคล</h1>-->
+			 <div class="container text-center mt-3 mb-3">
+            <marquee behavior="scroll" direction="left" style="color:#000000; font-size: 18px;margin-top: 2px; margin-bottom: 2px;" onmouseover="this.stop();" onmouseout="this.start();"><h6 style="margin-top: 2px; margin-bottom: 4px;"><img src="https://lh5.googleusercontent.com/d/1cD2nVKNscJg1DJPnkaakah7Nz4ez_BZS" height="12" width="25" >&nbsp;ยินดีต้อนรับเข้าสู่ระบบวิเคราะห์ผู้เรียนรายบุคคล โรงเรียนปากช่อง :: ออกแบบและพัฒนาโดย KT | Tanasarn Sirak&nbsp;<img src="https://lh5.googleusercontent.com/d/1cD2nVKNscJg1DJPnkaakah7Nz4ez_BZS" height="12" width="25" ></h6></marquee>
+			</div>
+             <div class="progress-container">
+                 <div class="step-indicator-container">
+                     <div class="step-circle" data-step-id="1">1</div> <div class="step-circle" data-step-id="2">2</div>
+                     <div class="step-circle" data-step-id="3">3</div> <div class="step-circle" data-step-id="4">4</div>
+                     <div class="step-circle" data-step-id="5">5</div> <div class="step-circle" data-step-id="6">6</div>
+                     <div class="step-circle" data-step-id="7">7</div>
+                 </div>
+                 <div class="progress-bar-container"><div class="progress-bar-fill"></div></div>
+                 <div id="progress-text">ความคืบหน้า 0%</div>
+             </div>
+             <form id="multiStepForm">
+                 <div class="form-step active" data-step="1">
+                      <h2>ตอนที่ 1: ข้อมูลทั่วไป</h2>
+                      <div class="form-group"> <label for="studentId">1. เลขประจำตัวนักเรียน 5 ตัว</label> <input type="text" id="studentId" name="studentId" required pattern="[0-9]{5}" maxlength="5" minlength="5" inputmode="numeric" title="กรุณากรอกเลขประจำตัว 5 หลัก"> <span class="error-message" data-default-error="กรุณากรอกเลขประจำตัว 5 หลัก">กรุณากรอกเลขประจำตัว 5 หลัก</span> </div>
+                      <div class="form-group"> <label for="fullName">2. ชื่อ - สกุล</label> <input type="text" id="fullName" name="fullName" required pattern="^(นาย|นางสาว|เด็กชาย|เด็กหญิง).*" title="กรุณาขึ้นต้นด้วยคำนำหน้าชื่อ (นาย, นางสาว, เด็กชาย, เด็กหญิง) ตามด้วยชื่อและนามสกุล"> <span class="error-message" data-default-error="กรุณาขึ้นต้นด้วยคำนำหน้าชื่อ (นาย, นางสาว, ด.ช., ด.ญ.)">กรุณาขึ้นต้นด้วยคำนำหน้าชื่อ (นาย, นางสาว, ด.ช., ด.ญ.)</span> </div>
+                      <div class="form-group"> <label for="nickname">3. ชื่อเล่น</label> <input type="text" id="nickname" name="nickname" required> <span class="error-message" data-default-error="กรุณากรอกชื่อเล่น">กรุณากรอกชื่อเล่น</span> </div>
+                      <div class="form-group"> <label for="classLevel">4. ชั้น</label> <input type="text" id="classLevel" name="classLevel" required pattern="^ม\.[1-6]\/(1[0-4]|[1-9])$" placeholder="เช่น ม.4/1" title="รูปแบบ: ม.[1-6]/[1-14]"> <span class="error-message" data-default-error="กรุณากรอกชั้นในรูปแบบ ม.1/1 ถึง ม.6/14">กรุณากรอกชั้นในรูปแบบ ม.1/1 ถึง ม.6/14</span> </div>
+                      <div class="form-group"> <label for="classNumber">5. เลขที่</label> <input type="number" id="classNumber" name="classNumber" min="1" max="60" step="1" required> <span class="error-message" data-default-error="กรุณากรอกเลขที่ให้ถูกต้อง (1-60)">กรุณากรอกเลขที่ให้ถูกต้อง (1-60)</span> </div>
+                      <div class="form-group"> <label for="gpa">6. เกรดเฉลี่ยล่าสุด</label> <input type="number" id="gpa" name="gpa" required min="0" max="4.00" step="0.01"> <span class="error-message" data-default-error="กรุณากรอกเกรดเฉลี่ยระหว่าง 0.00 - 4.00">กรุณากรอกเกรดเฉลี่ยระหว่าง 0.00 - 4.00</span> </div>
+                      <div class="form-group"> <label for="careerInterest">7. อาชีพที่สนใจ</label> <input type="text" id="careerInterest" name="careerInterest" required> <span class="error-message" data-default-error="กรุณากรอกอาชีพที่สนใจ">กรุณากรอกอาชีพที่สนใจ</span> </div>
+                      <div class="form-group"> <label for="weight">8. น้ำหนัก (กก.)</label> <input type="number" id="weight" name="weight" required min="10" step="0.1"> <span class="error-message" data-default-error="กรุณากรอกน้ำหนัก (กก.)">กรุณากรอกน้ำหนัก (กก.)</span> </div>
+                      <div class="form-group"> <label for="height">9. ส่วนสูง (ซม.)</label> <input type="number" id="height" name="height" required min="50" step="0.1"> <span class="error-message" data-default-error="กรุณากรอกส่วนสูง (ซม.)">กรุณากรอกส่วนสูง (ซม.)</span> </div>
+                      <div class="form-group"> <label for="healthCondition">10. โรคประจำตัว (ถ้าไม่มีใส่ -)</label> <input type="text" id="healthCondition" name="healthCondition" required> <span class="error-message" data-default-error='กรุณากรอกโรคประจำตัว หรือใส่ "-" ถ้าไม่มี'>กรุณากรอกโรคประจำตัว หรือใส่ "-" ถ้าไม่มี</span> </div>
+                      <div class="form-group"> <label for="specialTalent">11. ความสามารถพิเศษ (ถ้าไม่มีใส่ -)</label> <input type="text" id="specialTalent" name="specialTalent" required> <span class="error-message" data-default-error='กรุณากรอกความสามารถพิเศษ หรือใส่ "-" ถ้าไม่มี'>กรุณากรอกความสามารถพิเศษ หรือใส่ "-" ถ้าไม่มี</span> </div>
+                      <div class="form-group"> <label id="scholarship-label">12. ต้องการขอทุนการศึกษาหรือไม่</label> <div class="radio-group" role="radiogroup" aria-labelledby="scholarship-label"> <label><input type="radio" name="scholarship" value="ต้องการ" required> ต้องการ</label> <label><input type="radio" name="scholarship" value="ไม่ต้องการ"> ไม่ต้องการ</label> </div> <span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+                      <div class="button-group"> <span></span> <button type="button" class="next-btn" onclick="nextStep()">ถัดไป <i class="fas fa-arrow-right"></i></button> </div>
+                 </div>
+				 <div class="form-step" data-step="2">
+                      <h2>ตอนที่ 2: ข้อมูลที่อยู่และผู้ปกครอง</h2>
+                      <div class="form-group">
+                          <label for="livingWith">1. ปัจจุบันอาศัยอยู่กับ</label>
+                          <select id="livingWith" name="livingWith" required>
+                              <option value="" disabled selected>เลือกตัวเลือก</option>
+                              <option value="บิดาและมารดา">บิดาและมารดา</option>
+							  <option value="บิดา">บิดา</option>
+                              <option value="มารดา">มารดา</option>
+                              <option value="ตา">ตา</option>
+                              <option value="ยาย">ยาย</option>
+                              <option value="ญาติ">ญาติ</option>
+                              <option value="อื่นๆ">อื่นๆ</option>
+                          </select>
+                          <span class="error-message" data-default-error="กรุณาเลือกผู้อาศัยอยู่ด้วย">กรุณาเลือกผู้อาศัยอยู่ด้วย</span>
+                      </div>
+                      <div class="form-group">
+                          <label for="houseNumber">2. บ้านเลขที่</label>
+                          <input type="text" id="houseNumber" name="houseNumber" required pattern="^[0-9\/\-]+$" title="กรอกเฉพาะตัวเลข, / และ - เท่านั้น">
+                          <span class="error-message" data-default-error="กรุณากรอกบ้านเลขที่ให้ถูกต้อง">กรุณากรอกบ้านเลขที่ให้ถูกต้อง</span>
+                      </div>
+                      <div class="form-group">
+                          <label for="moo">3. หมู่ที่</label>
+                          <input type="text" id="moo" name="moo" pattern="[0-9]*" inputmode="numeric" title="กรอกเฉพาะตัวเลขเท่านั้น">
+                          <span class="error-message" data-default-error="กรุณากรอกหมู่ที่เป็นตัวเลข">กรุณากรอกหมู่ที่เป็นตัวเลข</span>
+                      </div>
+                      <div class="form-group">
+                          <label for="village">4. หมู่บ้าน</label>
+                          <input type="text" id="village" name="village">
+                          <span class="error-message" data-default-error="กรุณากรอกชื่อหมู่บ้าน">กรุณากรอกชื่อหมู่บ้าน</span>
+                      </div>
+                      <div class="form-group">
+                          <label for="subDistrict">5. ตำบล</label>
+                          <input type="text" id="subDistrict" name="subDistrict" required placeholder="พิมพ์เพื่อค้นหาตำบล...">
+                          <span class="error-message" data-default-error="กรุณากรอกตำบล">กรุณากรอกตำบล</span>
+                      </div>
+                      <div class="form-group">
+                          <label for="district">6. อำเภอ</label>
+                          <input type="text" id="district" name="district" readonly required>
+                          <span class="error-message" data-default-error="ข้อมูลอำเภอจะแสดงอัตโนมัติ">ข้อมูลอำเภอจะแสดงอัตโนมัติ</span>
+                      </div>
+                      <div class="form-group">
+                          <label for="province">7. จังหวัด</label>
+                          <input type="text" id="province" name="province" readonly required>
+                          <span class="error-message" data-default-error="ข้อมูลจังหวัดจะแสดงอัตโนมัติ">ข้อมูลจังหวัดจะแสดงอัตโนมัติ</span>
+                      </div>
+                      <div class="form-group">
+                          <label for="zipCode">8. รหัสไปรษณีย์ (ตัวเลข 5 หลัก)</label>
+                          <input type="text" id="zipCode" name="zipCode" pattern="[0-9]{5}" maxlength="5" inputmode="numeric" readonly required>
+                          <span class="error-message" data-default-error="ข้อมูลรหัสไปรษณีย์จะแสดงอัตโนมัติ">ข้อมูลรหัสไปรษณีย์จะแสดงอัตโนมัติ (ตัวเลข 5 หลัก)</span>
+                      </div>
+                      <div class="form-group">
+                          <label for="studentMobile">9. โทรศัพท์มือถือ (ตัวเลข 10 หลัก)</label>
+                          <input type="text" id="studentMobile" name="studentMobile" required pattern="[0-9]{10}" maxlength="10" inputmode="numeric" title="กรุณากรอกเบอร์โทรศัพท์มือถือ 10 หลัก">
+                          <span class="error-message" data-default-error="กรุณากรอกเบอร์โทรศัพท์มือถือ 10 หลัก">กรุณากรอกเบอร์โทรศัพท์มือถือ 10 หลัก</span>
+                      </div>
+                       <div class="form-group">
+                          <label for="parentFullName">10. ชื่อ-สกุล ผู้ปกครอง (ต้องมีคำนำหน้า)</label>
+                          <input type="text" id="parentFullName" name="parentFullName" required pattern="^(นาย|นาง|นางสาว|อื่นๆ).*" title="กรุณาขึ้นต้นด้วยคำนำหน้าชื่อ (นาย, นาง, นางสาว, อื่นๆ) ตามด้วยชื่อและนามสกุล">
+                          <span class="error-message" data-default-error="กรุณากรอกชื่อ-สกุลผู้ปกครอง พร้อมคำนำหน้า">กรุณากรอกชื่อ-สกุลผู้ปกครอง พร้อมคำนำหน้า</span>
+                      </div>
+                      <div class="form-group">
+                          <label for="parentMobile">11. โทรศัพท์มือถือ ผู้ปกครอง (ตัวเลข 10 หลัก)</label>
+						  <input type="text" id="parentMobile" name="parentMobile" required pattern="[0-9]{10}" maxlength="10" minlength="10" inputmode="numeric" title="กรุณากรอกเบอร์โทรศัพท์มือถือผู้ปกครอง 10 หลัก"> 
+						  <span class="error-message" data-default-error="กรุณากรอกเบอร์โทรศัพท์มือถือผู้ปกครอง 10 หลัก">กรุณากรอกเบอร์โทรศัพท์มือถือผู้ปกครอง 10 หลัก</span> 
+					  </div>
+                      <div class="button-group">
+                          <button type="button" class="prev-btn" onclick="prevStep()"><i class="fas fa-arrow-left"></i> ย้อนกลับ</button>
+                          <button type="button" class="next-btn" onclick="nextStep()">ถัดไป <i class="fas fa-arrow-right"></i></button>
+                      </div>
+                 </div>
+                  <div class="form-step" data-step="3">
+                      <h2>ตอนที่ 3: ความรู้ ความสามารถและประสบการณ์</h2>
+                      <div class="form-group"> <label id="thaiKnowledge-label">1. ความรู้พื้นฐานของวิชาภาษาไทย</label> <div class="radio-group" role="radiogroup" aria-labelledby="thaiKnowledge-label"> <label><input type="radio" name="thaiKnowledge" value="ดีมาก" required> ดีมาก (เกรด 3.5-4.0)</label> <label><input type="radio" name="thaiKnowledge" value="ดี"> ดี (เกรด 2.5-3.0)</label> <label><input type="radio" name="thaiKnowledge" value="พอใช้"> พอใช้ (เกรด 0-2.0)</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+                      <div class="form-group"> <label id="mathKnowledge-label">2. ความรู้พื้นฐานของวิชาคณิตศาสตร์</label> <div class="radio-group" role="radiogroup" aria-labelledby="MathKnowledge-label"> <label><input type="radio" name="mathKnowledge" value="ดีมาก" required> ดีมาก (เกรด 3.5-4.0)</label> <label><input type="radio" name="MathKnowledge" value="ดี"> ดี (เกรด 2.5-3.0)</label> <label><input type="radio" name="MathKnowledge" value="พอใช้"> พอใช้ (เกรด 0-2.0)</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+					  <div class="form-group"> <label id="scienceKnowledge-label">3. ความรู้พื้นฐานของวิชาวิทยาศาสตร์</label> <div class="radio-group" role="radiogroup" aria-labelledby="scienceKnowledge-label"> <label><input type="radio" name="scienceKnowledge" value="ดีมาก" required> ดีมาก (เกรด 3.5-4.0)</label> <label><input type="radio" name="scienceKnowledge" value="ดี"> ดี (เกรด 2.5-3.0)</label> <label><input type="radio" name="scienceKnowledge" value="พอใช้"> พอใช้ (เกรด 0-2.0)</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+                      <div class="form-group"> <label id="foreignLangKnowledge-label">4. ความรู้พื้นฐานของวิชาภาษาต่างประเทศ</label> <div class="radio-group" role="radiogroup" aria-labelledby="foreignLangKnowledge-label"> <label><input type="radio" name="foreignLangKnowledge" value="ดีมาก" required> ดีมาก (เกรด 3.5-4.0)</label> <label><input type="radio" name="foreignLangKnowledge" value="ดี"> ดี (เกรด 2.5-3.0)</label> <label><input type="radio" name="foreignLangKnowledge" value="พอใช้"> พอใช้ (เกรด 0-2.0)</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+                      <div class="form-group"> <label id="socialStudiesKnowledge-label">5. ความรู้พื้นฐานของวิชาสังคมศึกษา ศาสนาและวัฒนธรรม</label> <div class="radio-group" role="radiogroup" aria-labelledby="socialStudiesKnowledge-label"> <label><input type="radio" name="socialStudiesKnowledge" value="ดีมาก" required> ดีมาก (เกรด 3.5-4.0)</label> <label><input type="radio" name="socialStudiesKnowledge" value="ดี"> ดี (เกรด 2.5-3.0)</label> <label><input type="radio" name="socialStudiesKnowledge" value="พอใช้"> พอใช้ (เกรด 0-2.0)</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+                      <div class="form-group"> <label id="artKnowledge-label">6. ความรู้พื้นฐานของวิชาศิลปะ</label> <div class="radio-group" role="radiogroup" aria-labelledby="artKnowledge-label"> <label><input type="radio" name="artKnowledge" value="ดีมาก" required> ดีมาก (เกรด 3.5-4.0)</label> <label><input type="radio" name="artKnowledge" value="ดี"> ดี (เกรด 2.5-3.0)</label> <label><input type="radio" name="artKnowledge" value="พอใช้"> พอใช้ (เกรด 0-2.0)</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+                      <div class="form-group"> <label id="healthPeKnowledge-label">7. ความรู้พื้นฐานของวิชาสุขศึกษาและพลศึกษา</label> <div class="radio-group" role="radiogroup" aria-labelledby="healthPeKnowledge-label"> <label><input type="radio" name="healthPeKnowledge" value="ดีมาก" required> ดีมาก (เกรด 3.5-4.0)</label> <label><input type="radio" name="healthPeKnowledge" value="ดี"> ดี (เกรด 2.5-3.0)</label> <label><input type="radio" name="healthPeKnowledge" value="พอใช้"> พอใช้ (เกรด 0-2.0)</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+                      <div class="form-group"> <label id="careerTechKnowledge-label">8. ความรู้พื้นฐานของวิชาการงานอาชีพ</label> <div class="radio-group" role="radiogroup" aria-labelledby="careerTechKnowledge-label"> <label><input type="radio" name="careerTechKnowledge" value="ดีมาก" required> ดีมาก (เกรด 3.5-4.0)</label> <label><input type="radio" name="careerTechKnowledge" value="ดี"> ดี (เกรด 2.5-3.0)</label> <label><input type="radio" name="careerTechKnowledge" value="พอใช้"> พอใช้ (เกรด 0-2.0)</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+                      <div class="button-group"> <button type="button" class="prev-btn" onclick="prevStep()"><i class="fas fa-arrow-left"></i> ย้อนกลับ</button> <button type="button" class="next-btn" onclick="nextStep()">ถัดไป <i class="fas fa-arrow-right"></i></button> </div>
+                 </div>
+                 <div class="form-step" data-step="4">
+                      <h2>ตอนที่ 4: ความพร้อมด้านสติปัญญา</h2>
+                      <div class="form-group"> <label id="creativity-label">1. ความคิดริเริ่มสร้างสรรค์</label> <div class="radio-group" role="radiogroup" aria-labelledby="creativity-label"> <label><input type="radio" name="creativity" value="ดีมาก" required> ดีมาก</label> <label><input type="radio" name="creativity" value="ดี"> ดี</label> <label><input type="radio" name="creativity" value="พอใช้"> พอใช้</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+					  <div class="form-group"> <label id="reasoning-label">2. การใช้เหตุผล</label> <div class="radio-group" role="radiogroup" aria-labelledby="reasoning-label"> <label><input type="radio" name="reasoning" value="ดีมาก" required> ดีมาก</label> <label><input type="radio" name="reasoning" value="ดี"> ดี</label> <label><input type="radio" name="reasoning" value="พอใช้"> พอใช้</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+                      <div class="form-group"> <label id="learningAbility-label">3. ความสามารถในการเรียนรู้</label> <div class="radio-group" role="radiogroup" aria-labelledby="learningAbility-label"> <label><input type="radio" name="learningAbility" value="ดีมาก" required> ดีมาก</label> <label><input type="radio" name="learningAbility" value="ดี"> ดี</label> <label><input type="radio" name="learningAbility" value="พอใช้"> พอใช้</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+                      <div class="form-group"> <label id="read-label">4. ความสามารถในการอ่าน</label> <div class="radio-group" role="radiogroup" aria-labelledby="creativity-label"> <label><input type="radio" name="read" value="ดีมาก" required> ดีมาก</label> <label><input type="radio" name="read" value="ดี"> ดี</label> <label><input type="radio" name="read" value="พอใช้"> พอใช้</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+                      <div class="form-group"> <label id="interest-label">5. ความสนใจและสมาธิในการเรียนรู้</label> <div class="radio-group" role="radiogroup" aria-labelledby="interest-label"> <label><input type="radio" name="interest" value="ดีมาก" required> ดีมาก</label> <label><input type="radio" name="interest" value="ดี"> ดี</label> <label><input type="radio" name="interest" value="พอใช้"> พอใช้</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+					  <div class="form-group"> <label id="problemSolving-label">6. การแก้ปัญหาเฉพาะหน้า</label> <div class="radio-group" role="radiogroup" aria-labelledby="problemSolving-label"> <label><input type="radio" name="problemSolving" value="ดีมาก" required> ดีมาก</label> <label><input type="radio" name="problemSolving" value="ดี"> ดี</label> <label><input type="radio" name="problemSolving" value="พอใช้"> พอใช้</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+                      <div class="form-group"> <label id="learningFocus-label">7. ความสนใจใฝ่เรียนรู้</label> <div class="radio-group" role="radiogroup" aria-labelledby="learningFocus-label"> <label><input type="radio" name="learningFocus" value="ดีมาก" required> ดีมาก</label> <label><input type="radio" name="learningFocus" value="ดี"> ดี</label> <label><input type="radio" name="learningFocus" value="พอใช้"> พอใช้</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+					  <div class="button-group"> <button type="button" class="prev-btn" onclick="prevStep()"><i class="fas fa-arrow-left"></i> ย้อนกลับ</button> <button type="button" class="next-btn" onclick="nextStep()">ถัดไป <i class="fas fa-arrow-right"></i></button> </div>
+                 </div>
+                 <div class="form-step" data-step="5">
+                      <h2>ตอนที่ 5: ความพร้อมด้านร่างกาย และพฤติกรรม</h2>
+                      <div class="form-group"> <label id="emotionControl-label">1. การควบคุมอารมณ์</label> <div class="radio-group" role="radiogroup" aria-labelledby="emotionControl-label"> <label><input type="radio" name="emotionControl" value="ดีมาก" required> ดีมาก</label> <label><input type="radio" name="emotionControl" value="ดี"> ดี</label> <label><input type="radio" name="emotionControl" value="พอใช้"> พอใช้</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+                      <div class="form-group"> <label id="determination-label">2. ความมุ่งมั่น ขยัน อดทน</label> <div class="radio-group" role="radiogroup" aria-labelledby="determination-label"> <label><input type="radio" name="determination" value="ดีมาก" required> ดีมาก</label> <label><input type="radio" name="determination" value="ดี"> ดี</label> <label><input type="radio" name="determination" value="พอใช้"> พอใช้</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+                      <div class="form-group"> <label id="responsibility-label">3. ความรับผิดชอบ</label> <div class="radio-group" role="radiogroup" aria-labelledby="responsibility-label"> <label><input type="radio" name="responsibility" value="ดีมาก" required> ดีมาก</label> <label><input type="radio" name="responsibility" value="ดี"> ดี</label> <label><input type="radio" name="responsibility" value="พอใช้"> พอใช้</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+                      <div class="form-group"> <label id="expression-label">4. ความสามารถในการแสดงออก</label> <div class="radio-group" role="radiogroup" aria-labelledby="expression-label"> <label><input type="radio" name="expression" value="ดีมาก" required> ดีมาก</label> <label><input type="radio" name="expression" value="ดี"> ดี</label> <label><input type="radio" name="expression" value="พอใช้"> พอใช้</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+					  <div class="form-group"> <label id="physicalHealth-label">5. สุขภาพร่างกาย</label> <div class="radio-group" role="radiogroup" aria-labelledby="physicalHealth-label"> <label><input type="radio" name="physicalHealth" value="แข็งแรง" required> แข็งแรง</label> <label><input type="radio" name="physicalHealth" value="ปกติ"> ปกติ</label> <label><input type="radio" name="physicalHealth" value="อ่อนแอ"> อ่อนแอ</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+                      <div class="form-group"> <label id="growth-label">6. การเจริญเติบโตเหมาะสมกับวัย</label> <div class="radio-group" role="radiogroup" aria-labelledby="growth-label"> <label><input type="radio" name="growth" value="สมส่วน" required> สมส่วน</label> <label><input type="radio" name="growth" value="ค่อนข้างสมส่วน"> ค่อนข้างสมส่วน</label> <label><input type="radio" name="growth" value="ไม่สมส่วน"> ไม่สมส่วน</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+                      <div class="form-group"> <label id="mentalHealth-label">7. สุขภาพจิต</label> <div class="radio-group" role="radiogroup" aria-labelledby="mentalHealth-label"> <label><input type="radio" name="mentalHealth" value="ร่าเริง แจ่มใส" required> ร่าเริง แจ่มใส</label> <label><input type="radio" name="mentalHealth" value="ปกติ"> ปกติ</label> <label><input type="radio" name="mentalHealth" value="ซึมเศร้า/วิตกกังวล"> ซึมเศร้า/วิตกกังวล</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+					  <div class="button-group"> <button type="button" class="prev-btn" onclick="prevStep()"><i class="fas fa-arrow-left"></i> ย้อนกลับ</button> <button type="button" class="next-btn" onclick="nextStep()">ถัดไป <i class="fas fa-arrow-right"></i></button> </div>
+                 </div>
+                 <div class="form-step" data-step="6">
+                      <h2>ตอนที่ 6: ความพร้อมด้านสังคม</h2>
+                      <div class="form-group"> <label id="adaptation-label">1. การปรับตัวเข้ากับผู้อื่น</label> <div class="radio-group" role="radiogroup" aria-labelledby="adaptation-label"> <label><input type="radio" name="adaptation" value="ดีมาก" required> ดีมาก</label> <label><input type="radio" name="adaptation" value="ดี"> ดี</label> <label><input type="radio" name="adaptation" value="พอใช้"> พอใช้</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+                      <div class="form-group"> <label id="sacrifice-label">2. การเสียสละ แบ่งปัน ช่วยเหลือผู้อื่น</label> <div class="radio-group" role="radiogroup" aria-labelledby="sacrifice-label"> <label><input type="radio" name="sacrifice" value="ดีมาก" required> ดีมาก</label> <label><input type="radio" name="sacrifice" value="ดี"> ดี</label> <label><input type="radio" name="sacrifice" value="พอใช้"> พอใช้</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+                      <div class="form-group"> <label id="discipline-label">3. การรักษาระเบียบวินัย กฎ กติกา</label> <div class="radio-group" role="radiogroup" aria-labelledby="discipline-label"> <label><input type="radio" name="discipline" value="ดีมาก" required> ดีมาก</label> <label><input type="radio" name="discipline" value="ดี"> ดี</label> <label><input type="radio" name="discipline" value="พอใช้"> พอใช้</label> </div><span class="error-message" data-default-error="กรุณาเลือกตัวเลือก">กรุณาเลือกตัวเลือก</span> </div>
+                      <div class="button-group"> <button type="button" class="prev-btn" onclick="prevStep()"><i class="fas fa-arrow-left"></i> ย้อนกลับ</button> <button type="button" class="next-btn" onclick="nextStep()">ถัดไป <i class="fas fa-arrow-right"></i></button> </div>
+                 </div>
+                 <div class="form-step" data-step="7">
+                      <h2>ตอนที่ 7: การจัดกิจกรรมการเรียนรู้ & ข้อเสนอแนะ</h2>
+                      <div class="form-group"> <label>1. รูปแบบกิจกรรมการเรียนรู้ที่นักเรียนต้องการ (เลือกได้มากกว่า 1 ข้อ)</label> <div class="checkbox-group"> <label><input type="checkbox" name="learningActivities" value="แบบบรรยาย"> แบบบรรยาย</label> <label><input type="checkbox" name="learningActivities" value="แบบอภิปราย"> แบบอภิปราย</label> <label><input type="checkbox" name="learningActivities" value="แบบสร้างแผนผังความคิด"> แบบสร้างแผนผังความคิด</label> <label><input type="checkbox" name="learningActivities" value="แบบใช้คำถาม"> แบบใช้คำถาม</label> <label><input type="checkbox" name="learningActivities" value="แบบทดลอง"> แบบทดลอง</label> <label><input type="checkbox" name="learningActivities" value="แบบโครงงาน"> แบบโครงงาน</label> <label><input type="checkbox" name="learningActivities" value="แบบระดมสมอง"> แบบระดมสมอง</label> <label><input type="checkbox" name="learningActivities" value="กระบวนการกลุ่ม"> กระบวนการกลุ่ม</label> <label><input type="checkbox" name="learningActivities" value="แบบสาธิต"> แบบสาธิต</label> <label><input type="checkbox" name="learningActivities" value="แบบแสดงบทบาทสมมุติ"> แบบแสดงบทบาทสมมุติ</label> <label><input type="checkbox" name="learningActivities" value="แบบบูรณาการ"> แบบบูรณาการ</label> <label><input type="checkbox" name="learningActivities" value="แบบให้ลงมือปฏิบัติ"> แบบให้ลงมือปฏิบัติ</label> <label><input type="checkbox" name="learningActivities" value="แบบสืบค้นหาความรู้ด้วยตนเอง"> แบบสืบค้นหาความรู้ด้วยตนเอง</label> </div> <span class="error-message" data-default-error="กรุณาเลือกอย่างน้อย 1 รูปแบบ">กรุณาเลือกอย่างน้อย 1 รูปแบบ</span> </div>
+                      <div class="form-group"> <label for="suggestions">2. ข้อเสนอแนะ (ถ้าไม่มีใส่ -)</label> <textarea id="suggestions" name="suggestions" rows="4" required></textarea> <span class="error-message" data-default-error='กรุณากรอกข้อเสนอแนะ หรือใส่ "-" ถ้าไม่มี'>กรุณากรอกข้อเสนอแนะ หรือใส่ "-" ถ้าไม่มี</span> </div>
+                      <div class="button-group"> <button type="button" class="prev-btn" onclick="prevStep()"><i class="fas fa-arrow-left"></i> ย้อนกลับ</button> <button type="submit" id="submitBtn"><i class="fas fa-paper-plane"></i> ส่งข้อมูล</button> </div>
+                 </div>
+            </form>
+             <div id="loadingMessage" style="display: none;"><i class="fas fa-spinner fa-spin"></i> กำลังส่งข้อมูล...</div>
+             <div id="successMessage" style="display: none; text-align: center; padding: 40px 20px;"> <h2 style="color: var(--secondary-color); margin-bottom: 15px;">ส่งข้อมูลสำเร็จ</h2> <p style="font-size: 1.2em; margin-bottom: 25px;" id="successText">ขอขอบคุณสำหรับข้อมูล</p> <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="80" height="80" fill="#219ebc"><path d="M256 48a208 208 0 1 1 0 416 208 208 0 1 1 0-416zm0 464A256 256 0 1 0 256 0a256 256 0 1 0 0 512zM369 209c9.4-9.4 9.4-24.6 0-33.9s-24.6-9.4-33.9 0l-111 111-47-47c-9.4-9.4-24.6-9.4-33.9 0s-9.4 24.6 0 33.9l64 64c9.4 9.4 24.6 9.4 33.9 0L369 209z"/></svg> </div>
+             <div id="errorMessage" style="display: none; color: var(--danger-color); padding: 15px; border: 1px solid var(--danger-color); border-radius: 5px; background-color: #f8d7da;"> </div>
+        </div>
+    </div>
+	
+<footer style="text-align: center;background-color:#faff99; padding: 10px 0; margin-top: 10px; border-top: 1px solid #e0e0e0; font-size: 0.9em; color: #555; width: 100%;">
+    :: Created and Develop by KT|Tanasarn Sirak ::
+	<div class="container text-center">
+	<a href="https://line.me/ti/p/3F7VGrqgUr" target="_blank"><i class="fa-solid fa-comments"></i></a> <a style="color:red;text-decoration:none;font-size:12px" href="https://line.me/ti/p/3F7VGrqgUr" target="_blank"> สอบถาม/แจ้งปัญหา :: <span style="font-size:12px;color:black">KT | Tanasarn Sirak © <script>document.write(new Date().getFullYear()+543)</script> </a>
+	</div>
+</footer>
+</div>
+</div>
+
+<script>
+    // --- CONFIGURATION ---
+    const webAppBaseUrl = 'https://script.google.com/macros/s/AKfycbxM6cZQkiW37EnqYElnAagDfr2enCHKNLi5NOJE2SppkOuzNu5OmR1yzqSe3XpHP9WKfA/exec'; // <--- ใส่ URL ที่ถูกต้อง! [cite: 1]
+    const submitAppsScriptUrl = webAppBaseUrl;
+    const fetchDataUrl = webAppBaseUrl;
+
+    // --- Global Variables ---
+    let currentStep = 1;
+	let allStudentsDataForFiltering = []; // << เพิ่มตัวแปรนี้สำหรับเก็บข้อมูลนักเรียนทั้งหมด
+	let isLoggedIn = false; // สถานะการ Login
+	let currentTeacherInfo = null; // ข้อมูลครูที่ Login
+    const formSteps = document.querySelectorAll('.form-step');
+    const form = document.getElementById('multiStepForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const stepCircles = document.querySelectorAll('.step-circle');
+    const studentIdInput = document.getElementById('studentId');
+    const progressBarFill = document.querySelector('.progress-bar-fill');
+    const progressText = document.getElementById('progress-text');
+    let studentDataTable;
+    const loadingOverlay = document.getElementById('loadingOverlay');
+    const placeholderImageUrl = 'https://via.placeholder.com/40?text=?'; // Placeholder for missing images
+    const defaultUserImage = 'https://via.placeholder.com/80?text=No+Image'; // Placeholder for popup
+
+
+
+	async function askUserRole() {
+    const { value: role } = await Swal.fire({
+        title: 'ประเภทผู้ใช้งานระบบ',
+        text: 'กรุณาเลือกบทบาทของคุณเพื่อดำเนินการต่อ',
+        icon: 'question',
+        showDenyButton: true, // ปุ่มสำหรับนักเรียน
+        showConfirmButton: true, // ปุ่มสำหรับครู
+        confirmButtonText: '<i class="fas fa-chalkboard-teacher"></i> ฉันเป็นครู',
+        denyButtonText: '<i class="fas fa-user-graduate"></i> ฉันเป็นนักเรียน',
+        confirmButtonColor: '#3085d6',
+        denyButtonColor: '#06d6a0', // สีเขียวสำหรับนักเรียน
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+		footer: '<div style="text-align: center;background-color:#faff99;cursor:pointer; padding: 10px 0; margin-top: 0px; border-top: 0px solid #e0e0e0; font-size: 0.9em; color: #555; width: 100%;"> ::©️2568 Created and Develop by <a href="https://line.me/ti/p/3F7VGrqgUr" target="_blank">KT|Tanasarn Sirak </a>::</div>'
+        // customClass: { // (ทางเลือก) ถ้าต้องการปรับแต่ง CSS เพิ่มเติม
+        //     actions: 'my-actions',
+        //     confirmButton: 'my-confirm-button-class',
+        //     denyButton: 'my-deny-button-class',
+        // }
+    });
+
+    if (role === true) { // ผู้ใช้คลิก ConfirmButton (ครู)
+        showLoginModal(); // แสดงหน้าต่าง Login สำหรับครู
+    } else if (role === false) { // ผู้ใช้คลิก DenyButton (นักเรียน)
+        showView('form');
+    } else {
+        // กรณีผู้ใช้อาจจะหาทางปิดได้ (ซึ่งไม่ควรเกิดถ้า allowOutsideClick/allowEscapeKey เป็น false)
+        // หรือถ้ามีการเพิ่มปุ่ม Cancel ในอนาคต
+        // ให้แสดง alert เดิมอีกครั้ง หรือทำ default action
+        askUserRole(); // เรียกตัวเองซ้ำเพื่อให้เลือกใหม่
+    }
+}
+
+    // --- Initialization ---
+// --- Initialization ---
+    $(document).ready(function() {
+        // Initialize DataTable (ควรทำก่อนการจัดการ view อื่นๆ ที่อาจจะใช้ตาราง)
+        studentDataTable = $('#studentDataTable').DataTable({
+            responsive: true,
+            language: { url: 'th.json' }, // ตรวจสอบให้แน่ใจว่า th.json โหลดได้ (อาจต้องใช้ local server)
+            columns: [
+                { "data": "index", "width": "30px", "className": "text-center dt-body-center" },
+                {
+                   "data": "imageUrl", "orderable": false, "searchable": false, "width": "50px", "className": "dt-body-center",
+                   "render": function ( data ) {
+                        const imgSrc = (data && (String(data).startsWith('http://') || String(data).startsWith('https://'))) ? data : placeholderImageUrl;
+                        const safeImgSrc = String(imgSrc).replace(/'/g, "\\'");
+                        return `<img src="${imgSrc}" alt="รูป" class="student-image" onclick="showImageModal('${safeImgSrc}')" onerror="this.onerror=null;this.src='${placeholderImageUrl}'; this.onclick=null; this.style.cursor='default'; this.classList.remove('student-image');">`;
+                    }
+                },
+                { "data": "name" },
+                { "data": "class", "width": "60px", "className": "dt-body-center" },
+                { "data": "number", "width": "50px", "className": "dt-body-center" },
+                {
+					"data": "status",
+					"orderable": true,
+					"searchable": true,
+					"width": "120px",
+					"className": "dt-body-center",
+					"render": function ( data, type, row ) {
+						if (type === 'filter' || type === 'sort' || type === 'type') {
+							return data;
+						}
+						if (data === 'บันทึกแล้ว') {
+							return '<button class="status-btn status-recorded" disabled><i class="fas fa-check-circle"></i> บันทึกแล้ว</button>';
+						} else {
+							const safeStudentId = String(row.studentId).replace(/'/g, "\\'");
+							//return `<button class="status-btn status-not-recorded" onclick="goToFormForStudent('${safeStudentId}')"><i class="fas fa-edit"></i> ยังไม่บันทึก</button>`;
+							return `<button class="status-btn status-not-recorded"><i class="fas fa-edit"></i> ยังไม่บันทึก</button>`;
+						}
+					}
+				},
+                {
+                    "data": "studentId",
+                    "orderable": false, "searchable": false, "width": "150px", "className": "dt-body-center",
+                    "render": function ( data, type, row ) {
+                         if (row.status === 'บันทึกแล้ว') {
+                             const safeStudentId = String(data).replace(/'/g, "\\'");
+                             const viewBtn = `<button class="action-btn action-view-btn" onclick="showDataPopup('${safeStudentId}')"><i class="far fa-eye"></i> ดูข้อมูล</button>`;
+                             const pdfBtn = `<button id="pdf-btn-${safeStudentId}" class="action-btn action-pdf-btn" onclick="openPdf('${safeStudentId}', this)"><i class="far fa-file-pdf"></i> PDF</button>`;
+                             return viewBtn + ' ' + pdfBtn;
+                         } else {
+                             return '<span class="status-waiting-text">รอข้อมูล</span>';
+                         }
+                    }
+                },
+                {
+                   "data": "recordedTimestamp", "visible": false, "searchable": false
+                }
+            ],
+            "processing": false,
+            //"order": [],
+			 "order": [[7, 'desc']], // <--- แก้ไขเรียบร้อย: เรียงจากคอลัมน์ index 7 (recordedTimestamp) มากไปน้อย (ล่าสุด)
+            "pageLength": 25,
+            "lengthMenu": [ [10, 25, 50, -1], [10, 25, 50, "ทั้งหมด"] ]
+        });
+
+        // ตรวจสอบ URL ของ Web App (ควรทำครั้งเดียว)
+        checkPlaceholderUrls();
+
+        // Setup event listeners (ควรทำครั้งเดียว)
+        if (studentIdInput) { // ตรวจสอบว่า studentIdInput ไม่ใช่ null ก่อนเพิ่ม event listener
+            studentIdInput.addEventListener('blur', handleStudentIdBlur);
+        }
+        if (form) { // ตรวจสอบว่า form ไม่ใช่ null ก่อนเพิ่ม event listener
+            form.addEventListener('submit', handleFormSubmit);
+        }
+
+        document.querySelectorAll('.error-message').forEach(el => {
+            if (el) { // ตรวจสอบว่า el ไม่ใช่ null
+               el.dataset.defaultError = el.textContent;
+            }
+        });
+
+        // --- ตรวจสอบสถานะการ Login ของครูจาก sessionStorage ---
+        // และตัดสินใจว่าจะแสดงหน้าเลือกบทบาท หรือไปยัง Dashboard เลย
+        if (sessionStorage.getItem('isTeacherLoggedIn') === 'true') {
+            try {
+                currentTeacherInfo = JSON.parse(sessionStorage.getItem('currentTeacherInfo'));
+                isLoggedIn = true; // ตั้งค่า isLoggedIn
+                if (document.getElementById('nav-logout-btn')) { // ตรวจสอบ element ก่อน
+                    document.getElementById('nav-logout-btn').style.display = 'inline-block';
+                }
+                showView('dashboard'); // ถ้าครู login ค้างไว้ ให้ไปหน้า dashboard โดยตรง
+				document.getElementById('nav-form-btn').style.display = 'none'; // ซ่อนปุ่ม form
+			    document.getElementById('nav-dashboard-btn').style.display = 'none'; // ซ่อนปุ่ม dashboard
+            } catch (e) {
+                console.error("Error parsing teacher info from session storage or setting up UI:", e);
+                // ถ้ามีปัญหาในการ parse ข้อมูลครู หรือตั้งค่า UI, ล้าง session และให้เลือกบทบาทใหม่
+                sessionStorage.removeItem('isTeacherLoggedIn');
+                sessionStorage.removeItem('currentTeacherInfo');
+                isLoggedIn = false; // รีเซ็ตสถานะ login
+                currentTeacherInfo = null;
+                if (document.getElementById('nav-logout-btn')) {
+                    document.getElementById('nav-logout-btn').style.display = 'none';
+                }
+                askUserRole(); // ให้เลือกบทบาทใหม่
+            }
+        } else {
+            // ถ้ายังไม่ได้ login หรือไม่มี session ค้างไว้ ให้ถามบทบาทผู้ใช้
+            askUserRole();
+        }
+
+        // โค้ดส่วนนี้ (ที่เคยอยู่บรรทัด ~430 และแก้ไขแล้ว) อาจจะไม่จำเป็นแล้ว
+        // เพราะการเรียก showInitialStudentIdPrompt() จะถูกจัดการผ่าน askUserRole() -> showView('form')
+        /*
+        const formContainerForCheck = document.querySelector('.form-container');
+        if (formContainerForCheck && formContainerForCheck.style.display !== 'none') {
+            // console.log("Form container is visible, potentially calling showInitialStudentIdPrompt if needed.");
+            // การเรียก showInitialStudentIdPrompt จริงๆ ควรจะเกิดใน showView('form') ถ้า studentIdInput.value ว่าง
+        }
+        */
+    });
+		
+
+async function showInitialStudentIdPrompt() {
+    try {
+        const result = await Swal.fire({ // เปลี่ยนจากการ destructure 'value' มาเก็บผลลัพธ์ทั้งหมดก่อน
+            title: "ป้อนรหัสนักเรียน", // แก้ไข title ให้สื่อความหมาย
+            input: "text", // แก้ไขประเภท input (หรือ "tel" เพื่อให้เหมาะกับตัวเลข)
+            inputLabel: "รหัสนักเรียน",
+            inputPlaceholder: 'รหัสนักเรียน 5 หลัก',
+            inputAttributes: {
+                maxlength: "5",
+                pattern: "[0-9]{5}",
+                title: "รหัสประจำตัวนักเรียน 5 หลัก",
+                inputmode: "numeric" // เพิ่ม inputmode เพื่อประสบการณ์ที่ดีขึ้นบนมือถือ
+            },
+            showCancelButton: true,
+            confirmButtonText: 'ค้นหา',
+            cancelButtonText: 'ยกเลิก',
+            allowOutsideClick: false,
+            inputValidator: (inputValue) => { // 'inputValue' คือค่าปัจจุบันจากช่อง input ของ SweetAlert
+                if (!inputValue) {
+                    return 'คุณต้องกรอกรหัสประจำตัวนักเรียน!';
+                }
+                if (!/^\d{5}$/.test(inputValue)) {
+                    return 'รหัสประจำตัวนักเรียนต้องเป็นตัวเลข 5 หลัก!';
+                }
+                return null; // คืนค่า null เมื่อผ่านการตรวจสอบ
+            }
+        });
+
+        if (result.isConfirmed && result.value) {
+            const studentId = result.value;
+            studentIdInput.value = studentId;
+            handleStudentIdBlur.call(studentIdInput);
+			document.getElementById('nav').style.display = 'none'; // ซ่อนปุ่ม nav
+        } else {
+            // ผู้ใช้กดยกเลิก หรือไม่ได้กรอกค่า
+            studentIdInput.focus();
+			askUserRole();
+        }
+    } catch (error) {
+        console.error("Error in showInitialStudentIdPrompt:", error);
+        // อาจแสดง SweetAlert แจ้งข้อผิดพลาดให้ผู้ใช้ทราบ (ทางเลือก)
+        Swal.fire("เกิดข้อผิดพลาด", "ไม่สามารถแสดงหน้าต่างสำหรับกรอกรหัสนักเรียนได้", "error");
+    }
+}
+
+	
+
+// --- View Switching ---
+function showView(viewName) {
+    const dashboardContainer = document.getElementById('dashboard-container');
+    const formContainer = document.querySelector('.form-container');
+    const navDashboardBtn = document.getElementById('nav-dashboard-btn');
+    const navFormBtn = document.getElementById('nav-form-btn');
+    $('#loadingMessage, #successMessage, #errorMessage').hide();
+
+    if (viewName === 'dashboard') {
+        // --- เพิ่มการตรวจสอบ Login ---
+        if (!isLoggedIn) {
+            showLoginModal(); // แสดง Modal Login ถ้ายังไม่ได้ Login
+            return; // ไม่ต้องทำอะไรต่อ รอผลจาก Modal
+        }
+        // --- สิ้นสุดการตรวจสอบ Login ---
+
+        dashboardContainer.style.display = 'block'; formContainer.style.display = 'none';
+        navDashboardBtn.classList.add('active'); navFormBtn.classList.remove('active');
+        loadDashboardData(); // Load data when switching to dashboard
+
+    } else if (viewName === 'form') {
+        dashboardContainer.style.display = 'none'; formContainer.style.display = 'block';
+        navDashboardBtn.classList.remove('active'); navFormBtn.classList.add('active');
+        showFormElements(true);
+        if (!studentIdInput.value) {
+            form.reset();
+            clearStep1Fields(true);
+            currentStep = 1;
+            showStep(currentStep);
+			// --- เพิ่มการเรียก SweetAlert ที่นี่ด้วย ---
+            showInitialStudentIdPrompt(); // <--- เพิ่มบรรทัดนี้
+            // --- สิ้นสุดการเพิ่ม ---
+        } else {
+            showStep(currentStep);
+        }
+    }
+    setTimeout(() => { window.scrollTo({ top: 0, behavior: 'smooth' }); }, 100);
+}
+
+// --- Teacher Login Functions ---
+function showLoginModal() {
+    Swal.fire({
+        html: `
+		
+		    <div class="modal-header">
+			<h7 class="modal-title"><i class="fas fa-edit me-2 text-primary"></i> ลงชื่อเข้าสู่ระบบ</h7>
+			</div>
+			<div class="col mt-4 mb-4">
+			<label for="login-username" style="margin-left: 12px; margin-top: -14px; position: absolute; background-color: white; border: 2px solid white;"><i class="fas fa-id-card me-2 text-primary"></i>ชื่อผู้ใช้ (หมายเลขโทร.)</label>
+            <input type="tel" class="form-control form-control  border border-primary"  style="height: 3.3rem;" id="login-username" placeholder="หมายเลขโทรศัพท์"  maxlength="10" inputmode="numeric" pattern="[0-9]*">
+			</div>
+		
+			<div class="col mt-4">
+			<label for="login-password" style="margin-left: 12px; margin-top: -14px; position: absolute; background-color: white; border: 2px solid white;"><i class="fas fa-id-card me-2 text-primary"></i>รหัสครูผู้สอน :</label>
+            <input type="tel" class="form-control form-control  border border-primary"  style="height: 3.3rem;" id="login-password" placeholder="รหัสผ่าน"  maxlength="4" inputmode="numeric" pattern="[0-9]*">
+			</div>
+
+		
+		`,
+        confirmButtonText: 'เข้าสู่ระบบ',
+        focusConfirm: false,
+        showCancelButton: true,
+        cancelButtonText: 'ยกเลิก',
+		confirmButtonColor: "#3085d6",
+		cancelButtonColor: "#d33",
+		footer: '<a style="color:#1702f7;cursor:pointer" target="_blank" href="https://line.me/ti/p/3F7VGrqgUr"><i class="fa-solid fa-user-tie fa-beat"></i> ลืมรหัสผ่านติดต่อ อ.ธนสาร สีรักษ์</a>',
+        allowOutsideClick: false, // ป้องกันการปิด Modal โดยคลิกด้านนอก
+        preConfirm: () => {
+            const username = Swal.getPopup().querySelector('#login-username').value;
+            const password = Swal.getPopup().querySelector('#login-password').value;
+            if (!username || !password) {
+                Swal.showValidationMessage(`กรุณากรอกทั้งหมายเลขโทรศัพท์และรหัสผ่าน`);
+                return false; // ป้องกันการปิด Modal ถ้าข้อมูลไม่ครบ
+            }
+            return { username: username, password: password };
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            handleTeacherLoginAttempt(result.value.username, result.value.password);
+			document.getElementById('nav-form-btn').style.display = 'none'; // ซ่อนปุ่ม form
+			document.getElementById('nav-dashboard-btn').style.display = 'none'; // ซ่อนปุ่ม dashboard
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+            // ถ้าผู้ใช้กดยกเลิก อาจจะพาไปหน้า form หรือทำอย่างอื่นตามต้องการ
+            //showView('form'); // ตัวอย่าง: กลับไปหน้า Form
+			askUserRole();
+        }
+    });
+}
+
+function handleTeacherLoginAttempt(username, password) {
+     if (!fetchDataUrl || fetchDataUrl.includes('YOUR_DEPLOYED_WEB_APP_URL_HERE') || fetchDataUrl.length < 60) { // เพิ่ม .length < 60 เพื่อดักจับ URL ที่สั้นผิดปกติ
+            Swal.fire('Error', 'Web App URL (fetchDataUrl) is not configured correctly in HTML.', 'error');
+            return;
+        }
+
+    Swal.fire({
+        title: 'กำลังตรวจสอบ...',
+        allowOutsideClick: false,
+        didOpen: () => { Swal.showLoading(); }
+    });
+
+    const loginUrl = `${fetchDataUrl}?action=teacherLogin&username=${encodeURIComponent(username)}&password=${encodeURIComponent(password)}&t=${new Date().getTime()}`;
+
+    fetch(loginUrl)
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => { throw new Error(text || `HTTP error! status: ${response.status}`); });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data && data.status === 'success') {
+				document.getElementById('nav-logout-btn').style.display = 'inline-block';
+                isLoggedIn = true;
+				currentTeacherInfo = data.teacher;
+				sessionStorage.setItem('isTeacherLoggedIn', 'true');
+				if (currentTeacherInfo) {
+				document.getElementById('nav-logout-btn').style.display = 'inline-block';
+			}
+				sessionStorage.setItem('currentTeacherInfo', JSON.stringify(currentTeacherInfo)); // เก็บเป็น JSON string
+                Swal.fire({
+                    icon: 'success',
+                    title: 'เข้าสู่ระบบสำเร็จ!',
+                    text: `ยินดีต้อนรับคุณ ${currentTeacherInfo.fullName || ''}`,
+                    timer: 2000, // ปิดอัตโนมัติหลัง 2 วินาที
+                    showConfirmButton: false
+                }).then(() => {
+                    showView('dashboard'); // เรียก showView('dashboard') อีกครั้งเพื่อเปิดหน้า Dashboard จริง
+                });
+            } else {
+                isLoggedIn = false;
+                currentTeacherInfo = null;
+                Swal.fire({
+                    icon: 'error',
+                    title: 'เข้าสู่ระบบไม่สำเร็จ',
+                    text: data.message || 'ชื่อผู้ใช้หรือรหัสผ่านไม่ถูกต้อง กรุณาลองอีกครั้ง',
+                }).then(() => {
+                    showLoginModal(); // แสดง Modal Login อีกครั้งถ้า Login ไม่ผ่าน
+                });
+            }
+        })
+        .catch(error => {
+            console.error('Login error:', error);
+            isLoggedIn = false;
+            currentTeacherInfo = null;
+            Swal.fire({
+                icon: 'error',
+                title: 'เกิดข้อผิดพลาด',
+                text: `ไม่สามารถเชื่อมต่อเพื่อเข้าสู่ระบบได้: ${error.message}`,
+            }).then(() => {
+                showLoginModal(); // แสดง Modal Login อีกครั้งถ้าเกิดข้อผิดพลาด
+            });
+        });
+}
+
+function logoutTeacher() {
+    isLoggedIn = false;
+    currentTeacherInfo = null;
+    sessionStorage.removeItem('isTeacherLoggedIn');
+    sessionStorage.removeItem('currentTeacherInfo');
+    document.getElementById('nav-logout-btn').style.display = 'none'; // ซ่อนปุ่ม Logout
+    //showView('form'); // หรือแสดง Modal Login
+    //Swal.fire({icon: 'info', title: 'ออกจากระบบแล้ว', timer: 1500, showConfirmButton: false});
+	Swal.fire({
+	  title: "ออกจากระบบ?",
+	  text: "ยืนยันออกจากระบบ!",
+	  icon: "warning",
+	  showCancelButton: true,
+	  confirmButtonColor: "#3085d6",
+	  cancelButtonColor: "#d33",
+	  confirmButtonText: "ใช่, ยืนยัน",
+	  cancelButtonText: "ยกเลิก"
+	}).then((result) => {
+	  if (result.isConfirmed) {
+		Swal.fire({
+		  title: "ออกจากระบบสำเร็จ",
+		  text: "คุณออกจากระบบแล้ว.",
+		  icon: "success",
+		  timer: 2000,
+		  timerProgressBar: true
+		});
+		askUserRole();	
+	  } else if (
+    /* Read more about handling dismissals below */
+    result.dismiss === Swal.DismissReason.cancel
+  ) {
+   Swal.fire({
+      title: "ยกเลิกการออกจากระบบ?",
+      text: "ยืนยันไม่ออกจากระบบ",
+      icon: "warning"
+    });
+  }
+  document.getElementById('nav-logout-btn').style.display = 'inline-block'; // ซ่อนปุ่ม Logout
+});
+}
+
+
+    // --- Go To Form ---
+    function goToFormForStudent(studentId) {
+        showView('form');
+        setTimeout(() => {
+            studentIdInput.value = studentId;
+            studentIdInput.focus();
+            handleStudentIdBlur.call(studentIdInput); // Trigger data fetch
+            currentStep = 1; // Always start at step 1 for editing/filling
+            showStep(currentStep);
+            const formElement = document.querySelector('.form-container');
+            if (formElement) { window.scrollTo({ top: formElement.offsetTop - 20, behavior: 'smooth' });}
+        }, 150);
+    }
+
+
+
+function setupTableFilters(initialStudentData) {
+    // ฟังก์ชันสำหรับช่วยในการเรียงลำดับห้องเรียน
+    function customSortClasses(a, b) {
+        const getClassParts = (className) => {
+            if (!className || typeof className !== 'string') {
+                return { level: 0, room: 0, original: className };
+            }
+            const match = className.match(/^ม\.(\d+)\/(\d+)$/);
+            if (match) {
+                return {
+                    level: parseInt(match[1], 10),
+                    room: parseInt(match[2], 10),
+                    original: className
+                };
+            }
+            return { level: 0, room: 0, original: className };
+        };
+
+        const classA = getClassParts(a);
+        const classB = getClassParts(b);
+
+        if (classA.level !== classB.level) {
+            return classA.level - classB.level;
+        }
+        return classA.room - classB.room;
+    }
+
+    // ดึงห้องเรียนที่ไม่ซ้ำกันและกรองค่า null/undefined ออก
+    const uniqueClasses = [...new Set(initialStudentData.map(student => student.class).filter(Boolean))];
+
+    // เรียงลำดับห้องเรียนด้วย customSortClasses
+    uniqueClasses.sort(customSortClasses);
+
+    const filterClassSelect = $('#filterClass');
+    // ล้าง options เก่า (ยกเว้น option แรกที่เป็น "ทั้งหมด") แล้วเพิ่ม option ใหม่
+    filterClassSelect.find('option:not(:first-child)').remove();
+
+    uniqueClasses.forEach(className => {
+        if (className) { // ตรวจสอบว่า className ไม่ใช่ค่าว่าง
+            filterClassSelect.append(`<option value="${className}">${className}</option>`);
+        }
+    });
+
+    // Event Listener สำหรับการกรองข้อมูลใน DataTable
+    $('#filterClass, #filterStatus').off('change').on('change', function() {
+        const selectedClass = $('#filterClass').val();
+        const selectedStatus = $('#filterStatus').val();
+
+        // ทำการกรองข้อมูลใน DataTable
+        // คอลัมน์ "ชั้น" คือ index 3 (จาก 0)
+        // คอลัมน์ "สถานะ" คือ index 5 (จาก 0)
+        studentDataTable.column(3).search(selectedClass ? '^' + selectedClass + '$' : '', true, false)
+                        .column(5).search(selectedStatus ? '^' + selectedStatus + '$' : '', true, false)
+                        .draw();
+
+        // ตรวจสอบว่า event นี้เกิดจากการเปลี่ยนแปลงค่าใน dropdown "กรองตามห้อง"
+        // และมีการเลือกห้องเรียนจริงๆ (selectedClass มีค่า และไม่ใช่ค่าว่าง)
+        // จึงจะเรียกแสดง SweetAlert สรุปข้อมูลห้องเรียน
+        // เราใช้ allStudentsDataForFiltering ที่เก็บข้อมูลนักเรียนทั้งหมดไว้สำหรับการคำนวณสรุป
+        if (this.id === 'filterClass' && selectedClass) {
+            showClassSummaryAlert(selectedClass, allStudentsDataForFiltering);
+        } else if (this.id === 'filterStatus' && selectedClass) {
+            // ถ้า event เกิดจาก filterStatus แต่ยังมีการเลือกห้องค้างไว้ ก็ให้แสดง summary ของห้องนั้นด้วย
+            showClassSummaryAlert(selectedClass, allStudentsDataForFiltering);
+        }
+        // ถ้า selectedClass เป็นค่าว่าง (คือเลือก "ทั้งหมด") จะไม่แสดง SweetAlert สรุปห้องเรียน
+    });
+}
+
+
+// ฟังก์ชันสำหรับคำนวณและแสดง SweetAlert สรุปข้อมูลห้องเรียน
+function showClassSummaryAlert(selectedClass, allStudents) {
+    if (!selectedClass || !allStudents || allStudents.length === 0) {
+        return; // ไม่ต้องทำอะไรถ้าไม่มีห้องที่เลือก หรือไม่มีข้อมูลนักเรียน
+    }
+
+    let recordedInClass = 0;
+    let notRecordedInClass = 0;
+    let totalInClass = 0;
+
+    allStudents.forEach(student => {
+        if (student.class === selectedClass) {
+            totalInClass++;
+            if (student.status === 'บันทึกแล้ว') {
+                recordedInClass++;
+            } else {
+                notRecordedInClass++;
+            }
+        }
+    });
+
+    if (totalInClass > 0) { // แสดง Alert ต่อเมื่อมีนักเรียนในห้องที่เลือก
+        Swal.fire({
+            //title: '<h4><strong>สรุปจำนวนผู้บันทึกข้อมูล</strong></h4>',
+            icon: 'info',
+            html:
+				`<h5><strong>สรุปจำนวนผู้บันทึกข้อมูล</strong></h5>` +
+                `<hr style="height:6px;border-width:0;color:#fc0834;background-color:#080cfc"><b>🔰ห้อง :: </b>${selectedClass}<br><hr style="height:6px;border-width:0;color:#fc0834;background-color:#080cfc">` +
+                `<h6 Style="text-align: left">✅บันทึกแล้ว :: <b>&nbsp; &nbsp; &nbsp;  ${recordedInClass}&nbsp; &nbsp; &nbsp;  </b>  คน<br>` +
+                `⛔ยังไม่บันทึก ::  <b>&nbsp; &nbsp; &nbsp;  ${notRecordedInClass}&nbsp; &nbsp; &nbsp;  </b>  คน<br>` +
+                `💯รวมทั้งหมด ::  <b>&nbsp; &nbsp; &nbsp;  ${totalInClass}&nbsp; &nbsp; &nbsp;  </b>  คน <hr style="height:6px;border-width:0;color:#fc0834;background-color:#fc0834">`,
+            showCloseButton: true,
+            focusConfirm: false,
+            confirmButtonText: '<i class="fas fa-thumbs-up"></i> รับทราบ!',
+            confirmButtonAriaLabel: 'รับทราบ',
+        });
+    }
+}
+
+
+
+    // --- Dashboard Data Loading ---
+function loadDashboardData() {
+    if (!fetchDataUrl || fetchDataUrl.includes('YOUR_DEPLOYED_WEB_APP_URL_HERE') || fetchDataUrl.length < 60) {
+        console.warn("Web App URL not set.");
+        studentDataTable.clear().draw();
+        $('#studentDataTable tbody').html('<tr><td colspan="8" class="text-center">กรุณาตั้งค่า Web App URL ในโค้ด HTML (ตัวแปร webAppBaseUrl)</td></tr>'); // ปรับ colspan ตามจำนวนคอลัมน์จริง
+        $('.dashboard-card .count').text('N/A');
+        loadingOverlay.classList.add('hidden');
+        allStudentsDataForFiltering = []; // เคลียร์ข้อมูล
+        return;
+    }
+
+    loadingOverlay.classList.remove('hidden');
+    $('.dashboard-card .count').text('...'); // แสดงสถานะกำลังโหลดบนการ์ด
+    studentDataTable.clear().draw(); // เคลียร์ตารางก่อนโหลดข้อมูลใหม่
+
+    const url = `${fetchDataUrl}?action=getDashboardData&t=${new Date().getTime()}`; // Add timestamp to prevent caching
+
+    fetch(url)
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => {
+                    let errorMsg = `HTTP ${response.status}: ${response.statusText}`;
+                    try {
+                        const jsonError = JSON.parse(text);
+                        if (jsonError && jsonError.message) errorMsg = jsonError.message;
+                    } catch (e) {
+                        // Use substring of text if it's not JSON or doesn't have a message property
+                        errorMsg = text.substring(0, 200) || errorMsg;
+                    }
+                    throw new Error(errorMsg);
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data && data.status === 'success') {
+                // Update counts for each class level (recorded / total for that class)
+                $('#count-m1').text(`${data.counts?.recorded_m1 || 0} / ${data.counts?.total_m1 || 0}`);
+                $('#count-m2').text(`${data.counts?.recorded_m2 || 0} / ${data.counts?.total_m2 || 0}`);
+                $('#count-m3').text(`${data.counts?.recorded_m3 || 0} / ${data.counts?.total_m3 || 0}`);
+                $('#count-m4').text(`${data.counts?.recorded_m4 || 0} / ${data.counts?.total_m4 || 0}`);
+                $('#count-m5').text(`${data.counts?.recorded_m5 || 0} / ${data.counts?.total_m5 || 0}`);
+                $('#count-m6').text(`${data.counts?.recorded_m6 || 0} / ${data.counts?.total_m6 || 0}`);
+
+                // Update total recorded count for all students (recorded / total in school)
+                $('#count-total').text(`${data.counts?.totalRecorded || 0} / ${data.counts?.totalStudents || 0}`);
+
+                // Update table data and store for filtering
+                if (data.students && Array.isArray(data.students)) {
+                    allStudentsDataForFiltering = data.students; // เก็บข้อมูลนักเรียนทั้งหมดไว้สำหรับคำนวณสรุป
+                    studentDataTable.clear().rows.add(data.students).draw(false); // draw(false) preserves paging
+                    setupTableFilters(data.students); // เรียกฟังก์ชันตั้งค่าตัวกรอง
+                } else {
+                    allStudentsDataForFiltering = []; // เคลียร์ข้อมูลถ้าไม่มีนักเรียน
+                    $('#studentDataTable tbody').html('<tr><td colspan="8" class="text-center">ไม่พบข้อมูลนักเรียน</td></tr>'); // ปรับ colspan ตามจำนวนคอลัมน์จริง
+                }
+            } else {
+                throw new Error(data.message || 'Apps Script Error: ไม่สามารถโหลดข้อมูล Dashboard ได้');
+            }
+        })
+        .catch(error => {
+            console.error('Error loading dashboard data:', error);
+            $('#studentDataTable tbody').html(`<tr><td colspan="8" class="text-center text-danger">โหลดข้อมูลผิดพลาด: ${error.message}</td></tr>`); // ปรับ colspan
+            $('.dashboard-card .count').text('Error');
+            Swal.fire({
+                icon: 'error',
+                title: 'Dashboard Error',
+                html: `ไม่สามารถโหลดข้อมูลได้:<br><small>${error.message}</small>`,
+                confirmButtonText: 'ปิด'
+            });
+            allStudentsDataForFiltering = []; // เคลียร์ข้อมูลเมื่อเกิด error
+        })
+        .finally(() => {
+            loadingOverlay.classList.add('hidden');
+        });
+}
+
+    // --- Image Modal Function ---
+        // --- Image Modal Function ---
+function showImageModal(imageUrl) {
+    if (!imageUrl || imageUrl === placeholderImageUrl) {
+        Swal.fire({
+            title: 'ไม่มีรูปภาพ',
+            text: 'ไม่พบ URL รูปภาพสำหรับนักเรียนคนนี้',
+            icon: 'info',
+            confirmButtonText: 'ปิด' // เพิ่มปุ่มปิดเพื่อความชัดเจน
+        });
+        return;
+    }
+
+    Swal.fire({
+        imageUrl: imageUrl,
+        imageAlt: 'รูปนักเรียน',
+        width: '25%', // ลองเอา width ของ modal ออก หรือกำหนดเป็น % เช่น '80%' หรือ 'auto'
+                        // เพื่อให้ SweetAlert2 จัดการขนาดตามรูปภาพได้ดีขึ้น
+        // หรือถ้าต้องการกำหนดขนาดภาพโดยตรงใน modal
+        // imageWidth: '100%', // ทำให้ภาพกว้างเต็มพื้นที่ content ของ modal
+        // imageHeight: 'auto', // รักษาสัดส่วน
+        showConfirmButton: false, // ไม่จำเป็นต้องมีปุ่ม Confirm สำหรับดูรูป
+        showCloseButton: false,    // แสดงปุ่มปิด Modal
+        padding: '0.7em',        // ลด padding รอบรูปภาพ
+        background: '#fff',
+        backdrop: `rgba(0,0,0,0.6)`,
+        willClose: () => {
+            // ฟังก์ชันนี้จะถูกเรียกก่อนที่ SweetAlert2 modal จะปิด
+            // ตรวจสอบว่า studentDataTable ถูก initialize แล้วหรือยัง
+            if (typeof studentDataTable !== 'undefined' && $.fn.DataTable.isDataTable('#studentDataTable')) {
+                try {
+                    // หน่วงเวลาเล็กน้อยเพื่อให้ DOM จัดการตัวเองเสร็จก่อนปรับขนาด DataTable
+                    setTimeout(() => {
+                        studentDataTable.columns.adjust().responsive.recalc();
+                    }, 50); // หน่วงเวลา 50 มิลลิวินาที
+                } catch (e) {
+                    console.error("Error readjusting DataTable on SweetAlert close:", e);
+                }
+            }
+        }
+    });
+}
+
+    // --- Data Popup Functions ---
+    function showDataPopup(studentId) {
+         if (!fetchDataUrl || fetchDataUrl.includes('YOUR_DEPLOYED_WEB_APP_URL_HERE')) {
+             Swal.fire('Error', 'Web App URL (fetchDataUrl) is not configured.', 'error'); return;
+         }
+         Swal.fire({ title: 'กำลังโหลดข้อมูล...', allowOutsideClick: false, didOpen: () => Swal.showLoading() });
+
+         const url = `${fetchDataUrl}?action=getDetailedStudentData&studentId=${encodeURIComponent(studentId)}&t=${new Date().getTime()}`;
+
+         fetch(url)
+             .then(response => { if (!response.ok) { return response.text().then(text => { throw new Error(text || response.statusText); }); } return response.json(); })
+             .then(data => {
+                 if (data && data.status === 'success' && data.studentData) {
+                     const formattedHtml = formatStudentDataToHtml(data.studentData);
+                     Swal.fire({
+                         // title: `ข้อมูลนักเรียน: ${data.studentData.fullName || studentId}`, // Title removed, using header instead
+                         html: formattedHtml,
+                         width: '90%', // Wider popup
+                         showCloseButton: true,
+                         showCancelButton: false,
+                         showConfirmButton: false, // Hide default confirm
+                         customClass: { popup: 'data-popup-container' } // Add class for styling
+                     });
+                 } else {
+                     throw new Error(data.message || 'ไม่พบข้อมูลรายละเอียด');
+                 }
+             })
+             .catch(error => {
+                 console.error('Error fetching detailed student data:', error);
+                 Swal.fire('เกิดข้อผิดพลาด', `ไม่สามารถโหลดข้อมูลรายละเอียดได้: ${error.message}`, 'error');
+             });
+    }
+
+    function formatStudentDataToHtml(data) {
+        const createDlItem = (term, definition) => {
+            const value = (definition !== null && definition !== undefined && definition !== '') ? definition : '-';
+            return `<dt>${term}:</dt><dd>${value}</dd>`;
+        };
+
+        const studentImageSrc = (data.imageUrl && String(data.imageUrl).startsWith('http')) ? data.imageUrl : defaultUserImage;
+
+        let html = `<div class="data-popup-content" id="printable-data-area">`; // Wrap content for printing
+
+        // Header with Image
+        html += `<div class="data-popup-header">
+                    <img src="${studentImageSrc}" alt="รูปนักเรียน" onerror="this.onerror=null;this.src='${defaultUserImage}';">
+                    <h3>${data.fullName || 'ไม่พบชื่อ'} (${data.studentId || 'N/A'})</h3>
+                 </div>`;
+
+        html += '<h4>ข้อมูลทั่วไป</h4><dl>';
+        html += createDlItem('ชื่อเล่น', data.nickname);
+        html += createDlItem('ชั้น/เลขที่', `${data.classLevel || '-'} / ${data.classNumber || '-'}`);
+        html += createDlItem('เกรดเฉลี่ย (วิทย์/เคมี)', data.gpa);
+        html += createDlItem('อาชีพที่สนใจ', data.careerInterest);
+        html += createDlItem('น้ำหนัก (กก.)', data.weight);
+        html += createDlItem('ส่วนสูง (ซม.)', data.height);
+        html += createDlItem('โรคประจำตัว', data.healthCondition);
+        html += createDlItem('ความสามารถพิเศษ', data.specialTalent);
+        html += createDlItem('ขอทุน', data.scholarship);
+        html += '</dl>';
+
+        html += '<h4>ความรู้พื้นฐาน</h4><dl>';
+        html += createDlItem('ภาษาไทย', data.thaiKnowledge);
+        html += createDlItem('คณิตศาสตร์', data.mathKnowledge);
+		html += createDlItem('วิทยาศาสตร์', data.scienceKnowledge);
+        html += createDlItem('ภาษาต่างประเทศ', data.foreignLangKnowledge);
+        html += createDlItem('สังคมศึกษา', data.socialStudiesKnowledge);
+        html += createDlItem('ศิลปะ', data.artKnowledge);
+        html += createDlItem('สุขศึกษา/พละ', data.healthPeKnowledge);
+        html += createDlItem('การงานอาชีพ', data.careerTechKnowledge);
+        html += '</dl>';
+
+        html += '<h4>ความสามารถ/ประสบการณ์</h4><dl>';
+        html += createDlItem('การแก้ปัญหา', data.problemSolving);
+        html += createDlItem('ความสนใจใฝ่เรียนรู้', data.learningFocus);
+        html += createDlItem('ความคิดสร้างสรรค์', data.creativity);
+		html += createDlItem('ความสามารถในการอ่าน', data.read);
+		html += createDlItem('ความสนใจและสมาธิในการเรียนรู้', data.interest);
+        html += '</dl>';
+
+        html += '<h4>สติปัญญา</h4><dl>';
+        html += createDlItem('การใช้เหตุผล', data.reasoning);
+        html += createDlItem('ความสามารถเรียนรู้', data.learningAbility);
+        html += '</dl>';
+
+        html += '<h4>พฤติกรรม</h4><dl>';
+        html += createDlItem('การควบคุมอารมณ์', data.emotionControl);
+        html += createDlItem('ความมุ่งมั่น', data.determination);
+        html += createDlItem('ความรับผิดชอบ', data.responsibility);
+		html += createDlItem('การแสดงออก', data.expression);
+        html += '</dl>';
+
+        html += '<h4>ร่างกาย</h4><dl>';
+        html += createDlItem('สุขภาพร่างกาย', data.physicalHealth);
+        html += createDlItem('การเจริญเติบโต', data.growth);
+        html += createDlItem('สุขภาพจิต', data.mentalHealth);
+        html += '</dl>';
+
+        html += '<h4>สังคม</h4><dl>';
+        html += createDlItem('การปรับตัว', data.adaptation);
+        html += createDlItem('การเสียสละ/แบ่งปัน', data.sacrifice);
+        html += createDlItem('ระเบียบวินัย', data.discipline);
+        html += '</dl>';
+
+        html += '<h4>กิจกรรม/ข้อเสนอแนะ</h4><dl>';
+        html += createDlItem('กิจกรรมที่ต้องการ', data.learningActivities);
+        html += createDlItem('ข้อเสนอแนะ', data.suggestions);
+        html += createDlItem('บันทึกเมื่อ', data.timestamp); // Show timestamp
+        html += '</dl>';
+
+        // Action Buttons (Print)
+        html += `<div class="data-popup-actions">
+                    <button onclick="printElement('printable-data-area')" class="btn btn-primary"><i class="fas fa-print"></i> พิมพ์ข้อมูล</button>
+                 </div>`;
+
+        html += '</div>'; // Close printable-data-area
+        return html;
+    }
+
+    // --- Print Function ---
+    function printElement(elemId) {
+        // Rely on the @media print CSS rules
+        window.print();
+    }
+
+
+   // ----- เพิ่มฟังก์ชันสำหรับจัดการการคลิกปุ่ม PDF -----
+    /**
+     * เรียก Apps Script เพื่อสร้างหรือดึง URL ของ PDF แล้วเปิดในแท็บใหม่
+     * @param {string} studentId เลขประจำตัวนักเรียน
+     * @param {HTMLElement} buttonElement ปุ่มที่ถูกคลิก (สำหรับแสดง loading state)
+     */
+    function openPdf(studentId, buttonElement) {
+        if (!fetchDataUrl || fetchDataUrl.includes('YOUR_DEPLOYED_WEB_APP_URL_HERE')) {
+            Swal.fire('Error', 'Web App URL (fetchDataUrl) is not configured.', 'error');
+            return;
+        }
+
+        // แสดงสถานะกำลังโหลดบนปุ่ม
+        if (buttonElement) {
+             buttonElement.classList.add('loading');
+             buttonElement.disabled = true;
+             buttonElement.querySelector('i').classList.remove('fa-file-pdf'); // ซ่อนไอคอนเดิม
+             buttonElement.querySelector('i').classList.add('fa-spinner');    // แสดงไอคอนหมุน
+        }
+        // แสดง SweetAlert กำลังโหลด (เผื่อกรณีการสร้าง PDF นาน)
+        const loadingAlert = Swal.fire({
+            title: 'กำลังสร้าง/ดึงข้อมูล PDF...',
+            text: 'กรุณารอสักครู่ ระบบกำลังสร้างไฟล์ PDF ใหม่',
+            allowOutsideClick: false,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+
+        const url = `${fetchDataUrl}?action=generateOrGetPdf&studentId=${encodeURIComponent(studentId)}&t=${new Date().getTime()}`;
+
+        fetch(url)
+            .then(response => {
+                if (!response.ok) {
+                    // พยายามอ่านข้อความ error จาก response
+                    return response.text().then(text => {
+                       let errorMsg = `HTTP ${response.status}: ${response.statusText}`;
+                       try {
+                          const jsonError = JSON.parse(text);
+                          if (jsonError && jsonError.message) {
+                             errorMsg = jsonError.message; // ใช้ error message จาก script ถ้ามี
+                          } else {
+                             errorMsg = text.substring(0, 200) || errorMsg; // แสดงข้อความดิบถ้าไม่ใช่ JSON
+                          }
+                       } catch (e) {
+                          errorMsg = text.substring(0, 200) || errorMsg; // แสดงข้อความดิบถ้า parse JSON ไม่ได้
+                       }
+                       throw new Error(errorMsg);
+                    });
+                }
+                return response.json();
+            })
+            .then(result => {
+                loadingAlert.close(); // ปิด SweetAlert กำลังโหลด
+                if (result && result.status === 'success' && result.pdfUrl) {
+                    console.log("PDF URL Received:", result.pdfUrl);
+                    // เปิด PDF ในแท็บใหม่
+                    window.open(result.pdfUrl, '_blank');
+                } else {
+                    // กรณี status success แต่ไม่มี pdfUrl หรือ status เป็น error
+                    throw new Error(result.message || 'ไม่ได้รับ URL ของ PDF หรือเกิดข้อผิดพลาด');
+                }
+            })
+            .catch(error => {
+                loadingAlert.close(); // ปิด SweetAlert กำลังโหลด
+                console.error('Error getting PDF:', error);
+                Swal.fire({
+                    title: 'เกิดข้อผิดพลาด!',
+                    html: `ไม่สามารถเปิดหรือสร้างไฟล์ PDF ได้:<br><small>${error.message}</small>`,
+                    icon: 'error'
+                });
+            })
+            .finally(() => {
+                 // คืนค่าสถานะปุ่ม
+                 if (buttonElement) {
+                      buttonElement.classList.remove('loading');
+                      buttonElement.disabled = false;
+                      buttonElement.querySelector('i').classList.remove('fa-spinner'); // ซ่อนไอคอนหมุน
+                      buttonElement.querySelector('i').classList.add('fa-file-pdf');    // แสดงไอคอนเดิม
+                 }
+            });
+    }
+    // ----- สิ้นสุดฟังก์ชันใหม่ -----
+
+
+
+    // --- Form Logic (Keep previous functions) ---
+    function showFormElements(show) { const displayStyle = show ? 'block' : 'none'; const displayFlex = show ? 'flex' : 'none'; document.querySelectorAll('.form-container > *:not(#multiStepForm):not(#loadingMessage):not(#successMessage):not(#errorMessage)').forEach(el => { if (el.classList.contains('step-indicator-container')) { el.style.display = displayFlex; } else { el.style.display = displayStyle; } }); document.getElementById('multiStepForm').style.display = displayStyle; document.getElementById('loadingMessage').style.display = 'none'; document.getElementById('errorMessage').style.display = 'none'; document.getElementById('successMessage').style.display = 'none'; }
+    function checkPlaceholderUrls() { if (!webAppBaseUrl || webAppBaseUrl.includes('YOUR_DEPLOYED_WEB_APP_URL_HERE') || webAppBaseUrl.length < 60) { Swal.fire('คำเตือน', 'กรุณาตั้งค่า `webAppBaseUrl` ในโค้ด JavaScript (ไฟล์ HTML) ให้เป็น URL ที่ถูกต้องของ Web App ที่ Deploy แล้ว', 'warning'); } }
+    function handleStudentIdBlur() { const studentId = this.value.trim(); const formGroup = this.closest('.form-group'); const studentIdError = formGroup?.querySelector('.error-message'); if (/^\d{5}$/.test(studentId)) { this.classList.remove('invalid'); formGroup?.classList.remove('shake'); if(studentIdError) studentIdError.style.display = 'none'; fetchStudentDataForForm(studentId); } else if (studentId.length > 0) { this.classList.add('invalid'); formGroup?.classList.add('shake'); if(studentIdError) studentIdError.style.display = 'block'; clearStep1Fields(false); setTimeout(() => { formGroup?.classList.remove('shake'); }, 500); } else { this.classList.remove('invalid'); formGroup?.classList.remove('shake'); if(studentIdError) studentIdError.style.display = 'none'; clearStep1Fields(true); } }
+    //function fetchStudentDataForForm(studentId) { if (!fetchDataUrl || fetchDataUrl.includes('YOUR_DEPLOYED_WEB_APP_URL_HERE')) { console.warn("Web App URL not set for fetching data."); Swal.fire({ icon: 'warning', title: 'ตั้งค่าไม่สมบูรณ์', text: 'Web App URL (fetchDataUrl) ยังไม่ได้ตั้งค่าใน HTML' }); return; } Swal.fire({ title: 'กำลังค้นหาข้อมูลนักเรียน...', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } }); studentIdInput.readOnly = true; const url = `${fetchDataUrl}?action=getStudentData&studentId=${encodeURIComponent(studentId)}&t=${new Date().getTime()}`; fetch(url, { method: 'GET' }) .then(response => { if (!response.ok) { return response.text().then(text => { let errorMsg = `HTTP ${response.status}: ${response.statusText}`; try { const jsonError = JSON.parse(text); if (jsonError && jsonError.message) errorMsg = jsonError.message;} catch(e){} throw new Error(errorMsg); }); } return response.json(); }) .then(data => { Swal.close(); studentIdInput.readOnly = false; if (data && data.status === 'success' && data.studentData) { populateStep1Fields(data.studentData); } else if (data && data.status === 'not_found') { studentIdInput.classList.remove('invalid'); clearStep1Fields(false); Swal.fire({ icon: 'info', title: 'ไม่พบข้อมูล', text: `ไม่พบข้อมูลสำหรับเลขประจำตัว ${studentId} ในระบบหลัก หรือยังไม่ได้บันทึกข้อมูล` }); } else { throw new Error(data.message || 'ไม่สามารถดึงข้อมูลนักเรียนได้ (Response Format Error)'); } }) .catch(error => { Swal.close(); studentIdInput.readOnly = false; studentIdInput.classList.add('invalid'); const formGroup = studentIdInput.closest('.form-group'); formGroup?.classList.add('shake'); setTimeout(() => { formGroup?.classList.remove('shake'); }, 500); clearStep1Fields(false); console.error('Error fetching student data for form:', error); Swal.fire({ icon: 'error', title: 'เกิดข้อผิดพลาด', html: `ไม่สามารถดึงข้อมูลนักเรียนได้:<br><small>${error.message}</small>` }); }); }
+	
+	function fetchStudentDataForForm(studentId) {
+    if (!fetchDataUrl || fetchDataUrl.includes('YOUR_DEPLOYED_WEB_APP_URL_HERE') || fetchDataUrl.length < 60) {
+        console.warn("Web App URL not set for fetching data.");
+        Swal.fire({
+            icon: 'warning',
+            title: 'ตั้งค่าไม่สมบูรณ์',
+            text: 'Web App URL (fetchDataUrl) ยังไม่ได้ตั้งค่าใน HTML'
+        });
+        return;
+    }
+
+    Swal.fire({
+        title: 'กำลังค้นหาข้อมูลนักเรียน...',
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+    studentIdInput.readOnly = true; // ป้องกันการแก้ไข ID ขณะกำลังค้นหา
+
+    const url = `${fetchDataUrl}?action=getStudentData&studentId=${encodeURIComponent(studentId)}&t=${new Date().getTime()}`;
+
+    fetch(url, { method: 'GET' })
+        .then(response => {
+            if (!response.ok) {
+                // พยายามอ่าน error message จาก text response
+                return response.text().then(text => {
+                    let errorMsg = `HTTP ${response.status}: ${response.statusText}`;
+                    try {
+                        const jsonError = JSON.parse(text);
+                        if (jsonError && jsonError.message) {
+                            errorMsg = jsonError.message;
+                        } else if (text) {
+                            errorMsg = text.substring(0, 200); // แสดงส่วนหนึ่งของข้อความถ้าไม่ใช่ JSON
+                        }
+                    } catch (e) {
+                        if (text) errorMsg = text.substring(0, 200);
+                    }
+                    throw new Error(errorMsg);
+                });
+            }
+            return response.json();
+        })
+        .then(data => {
+            Swal.close(); // ปิด SweetAlert "กำลังค้นหา..."
+            studentIdInput.readOnly = false; // อนุญาตให้แก้ไข ID ได้อีกครั้ง
+
+            if (data && data.status === 'success' && data.studentData) {
+                // พบข้อมูลนักเรียน -> แสดง SweetAlert ยืนยันก่อน populate ฟอร์ม
+                Swal.fire({
+                    icon: 'success',
+                    title: 'พบข้อมูลนักเรียน!',
+                    html: `ชื่อ: <strong>${data.studentData.fullName || 'ไม่พบชื่อ'}</strong><br>รหัสนักเรียน: ${studentId}`,
+                    confirmButtonText: 'บันทึกข้อมูล',
+                    allowOutsideClick: false // ไม่ให้ปิดโดยคลิกข้างนอก
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        populateStep1Fields(data.studentData);
+                        // (ทางเลือก) Focus ไปที่ field แรกที่ต้องการให้กรอกต่อ
+                        // เช่น ถ้า gpa เป็น field ถัดไป
+                        const gpaInput = document.getElementById('gpa');
+                        if (gpaInput) {
+                            gpaInput.focus();
+                        }
+                    }
+                });
+            } else if (data && data.status === 'not_found') {
+                // ไม่พบข้อมูลนักเรียน -> แจ้งผู้ใช้และให้กรอกข้อมูลใหม่
+                studentIdInput.classList.remove('invalid'); // ลบสถานะ invalid ถ้ามี
+                clearStep1Fields(false); // เคลียร์ฟิลด์ส่วนใหญ่ แต่ยังคง studentId ที่ผู้ใช้กรอกไว้
+                Swal.fire({
+                    icon: 'info',
+                    title: 'ไม่พบข้อมูล',
+                    html: `ไม่พบข้อมูลสำหรับเลขประจำตัว <strong>${studentId}</strong> ในระบบ<br>คุณสามารถกรอกข้อมูลนักเรียนใหม่ได้เลย`,
+                    confirmButtonText: 'ตกลง'
+                }).then(() => {
+                    // Focus ไปที่ field แรกที่ต้องกรอกข้อมูลใหม่ เช่น ชื่อ-สกุล
+                    const fullNameInput = document.getElementById('fullName');
+                    if (fullNameInput) {
+                        fullNameInput.focus();
+                    }
+                });
+            } else {
+                // กรณีอื่นๆ ที่ไม่คาดคิด หรือ response format ผิดพลาด
+                throw new Error(data.message || 'ไม่สามารถดึงข้อมูลนักเรียนได้ (รูปแบบข้อมูลไม่ถูกต้อง)');
+            }
+        })
+        .catch(error => {
+            Swal.close(); // ปิด SweetAlert "กำลังค้นหา..." ถ้ายังเปิดอยู่
+            studentIdInput.readOnly = false;
+            studentIdInput.classList.add('invalid'); // แสดงว่า ID ที่ใช้ค้นหามีปัญหา
+            const formGroup = studentIdInput.closest('.form-group');
+            if (formGroup) {
+                formGroup.classList.add('shake');
+                setTimeout(() => {
+                    formGroup.classList.remove('shake');
+                }, 500);
+            }
+            clearStep1Fields(false); // เคลียร์ข้อมูลที่อาจจะเคย populate ไว้
+            console.error('Error fetching student data for form:', error);
+            Swal.fire({
+                icon: 'error',
+                title: 'เกิดข้อผิดพลาด!',
+                html: `ไม่สามารถดึงข้อมูลนักเรียนได้:<br><small>${error.message}</small>`,
+                confirmButtonText: 'ปิด'
+            });
+        });
+}
+	
+	
+	
+    function populateStep1Fields(data) { document.getElementById('fullName').value = data.fullName || ''; document.getElementById('nickname').value = data.nickname || ''; document.getElementById('classLevel').value = data.classLevel || ''; document.getElementById('classNumber').value = data.classNumber || ''; // Keep pre-filled fields from Master
+        // --- Clear fields that should come from the form only ---
+        document.getElementById('gpa').value = '';
+        document.getElementById('careerInterest').value = '';
+        document.getElementById('weight').value = '';
+        document.getElementById('height').value = '';
+        document.getElementById('healthCondition').value = '';
+        document.getElementById('specialTalent').value = '';
+        document.querySelectorAll('input[name="scholarship"]').forEach(r => r.checked = false);
+        // --- Clear validation state for Step 1 ---
+        studentIdInput.classList.remove('invalid');
+        const errSpan = studentIdInput.closest('.form-group')?.querySelector('.error-message');
+        if(errSpan) errSpan.style.display = 'none';
+        // Clear potential invalid states from other fields in step 1 if needed
+        const step1Element = document.querySelector('.form-step[data-step="1"]');
+        if(step1Element){
+           step1Element.querySelectorAll('.invalid').forEach(el => el.classList.remove('invalid'));
+           step1Element.querySelectorAll('.error-message').forEach(el => { el.style.display = 'none'; el.textContent = el.dataset.defaultError; }); // Reset error message text
+           step1Element.querySelectorAll('.form-group.invalid').forEach(el => el.classList.remove('invalid'));
+        }
+    }
+    function clearStep1Fields(includeId = true) { if(includeId){ document.getElementById('studentId').value = ''; document.getElementById('studentId').readOnly = false; const idInput = document.getElementById('studentId'); idInput.classList.remove('invalid'); const idErr = idInput.closest('.form-group')?.querySelector('.error-message'); if(idErr) { idErr.style.display = 'none'; idErr.textContent = idErr.dataset.defaultError;} } document.getElementById('fullName').value = ''; document.getElementById('nickname').value = ''; document.getElementById('classLevel').value = ''; document.getElementById('classNumber').value = ''; document.getElementById('gpa').value = ''; document.getElementById('careerInterest').value = ''; document.getElementById('weight').value = ''; document.getElementById('height').value = ''; document.getElementById('healthCondition').value = ''; document.getElementById('specialTalent').value = ''; document.querySelectorAll('input[name="scholarship"]').forEach(r => r.checked = false); const step1Element = document.querySelector('.form-step[data-step="1"]'); if(step1Element){ step1Element.querySelectorAll('.invalid').forEach(el => el.classList.remove('invalid')); step1Element.querySelectorAll('.error-message').forEach(el => {el.style.display = 'none'; el.textContent = el.dataset.defaultError;}); step1Element.querySelectorAll('.form-group.invalid').forEach(el => el.classList.remove('invalid')); step1Element.querySelectorAll('input[readonly]').forEach(i => i.readOnly = false); } }
+    function updateProgressIndicator(step) { stepCircles.forEach(circle => { circle.classList.remove('active', 'completed'); const circleStep = parseInt(circle.getAttribute('data-step-id')); if (circleStep < step) { circle.classList.add('completed'); } else if (circleStep === step) { circle.classList.add('active'); } }); }
+    function updateProgressBar(step) { const totalSteps = formSteps.length; const percentage = Math.min(100, ((step - 1) / totalSteps) * 100); if (progressBarFill) progressBarFill.style.width = percentage + '%'; if (progressText) progressText.textContent = `ความคืบหน้า ${Math.round(percentage)}%`; }
+    function showStep(step) { formSteps.forEach(s => s.classList.remove('active')); const stepElement = document.querySelector(`.form-step[data-step="${step}"]`); if (stepElement) { stepElement.classList.add('active'); updateProgressIndicator(step); updateProgressBar(step); } }
+	function validateStep(step) {
+    const currentStepElement = document.querySelector(`.form-step[data-step="${step}"]`);
+    if (!currentStepElement) return false;
+    let isValid = true;
+    let firstInvalidElement = null;
+
+    // --- Standard inputs, selects (not readonly), textareas (not readonly) ---
+    // This loop handles fields like:
+    // Step 1: studentId, fullName, nickname, classLevel, classNumber, gpa, careerInterest, weight, height, healthCondition, specialTalent
+    // Step 2 (New): livingWith (select), houseNumber, subDistrict, studentMobile, parentFullName, parentMobile
+    // Other Steps: suggestions, etc.
+    const inputs = currentStepElement.querySelectorAll(
+        'input[required]:not([type="checkbox"]):not([type="radio"]):not([readonly]), select[required]:not([readonly]), textarea[required]:not([readonly])'
+    );
+
+    inputs.forEach(input => {
+        const formGroup = input.closest('.form-group');
+        const errorSpan = formGroup?.querySelector('.error-message');
+        const defaultErrorMsg = errorSpan?.dataset.defaultError || 'กรุณากรอกข้อมูลนี้ให้ถูกต้อง';
+        let specificErrorMsg = defaultErrorMsg;
+        let inputValid = true;
+
+        // Perform validation
+        if (!input.checkValidity()) {
+            inputValid = false;
+            // Prioritize pattern mismatch message if applicable
+            if (input.validity.patternMismatch && input.title) {
+                specificErrorMsg = input.title;
+            } else if (input.validity.valueMissing) { // For required fields that are empty
+                specificErrorMsg = defaultErrorMsg;
+            } else { // Other validity errors (less common for this form's setup but good to have a fallback)
+                specificErrorMsg = input.title || defaultErrorMsg;
+            }
+        }
+
+        // Toggle classes and display error message
+        input.classList.toggle('invalid', !inputValid);
+        formGroup?.classList.toggle('invalid', !inputValid);
+
+        if (errorSpan) {
+            if (!inputValid) {
+                errorSpan.textContent = specificErrorMsg;
+                errorSpan.style.display = 'block';
+            } else {
+                errorSpan.style.display = 'none';
+                errorSpan.textContent = defaultErrorMsg; // Reset to default when hiding/valid
+            }
+        }
+
+        if (!inputValid) {
+            isValid = false;
+            if (!firstInvalidElement) firstInvalidElement = input;
+        }
+    });
+
+    // --- Radio button groups ---
+    const radioGroups = {};
+    currentStepElement.querySelectorAll('input[type="radio"][required]').forEach(radio => {
+        if (!radioGroups[radio.name]) {
+            const groupElement = radio.closest('.form-group');
+            radioGroups[radio.name] = {
+                radios: currentStepElement.querySelectorAll(`input[type="radio"][name="${radio.name}"]`),
+                groupElement: groupElement,
+                errorSpan: groupElement?.querySelector('.error-message'),
+                required: true
+            };
+        }
+    });
+
+    for (const name in radioGroups) {
+        const groupInfo = radioGroups[name];
+        const isChecked = Array.from(groupInfo.radios).some(radio => radio.checked);
+        const defaultRadioErrorMsg = groupInfo.errorSpan?.dataset.defaultError || 'กรุณาเลือกตัวเลือก';
+
+        groupInfo.groupElement?.classList.toggle('invalid', !isChecked);
+
+        if (groupInfo.errorSpan) {
+            if (!isChecked) {
+                groupInfo.errorSpan.textContent = defaultRadioErrorMsg;
+                groupInfo.errorSpan.style.display = 'block';
+            } else {
+                groupInfo.errorSpan.style.display = 'none';
+                groupInfo.errorSpan.textContent = defaultRadioErrorMsg; // Reset
+            }
+        }
+
+        if (!isChecked) {
+            isValid = false;
+            if (!firstInvalidElement) firstInvalidElement = groupInfo.radios[0];
+        }
+    }
+
+    // === START OF MODIFICATIONS FOR NEW STEP 2 and ADJUSTED STEP 9 ===
+
+    // --- Specific validation for Step 2 (newly added address/parent info step) ---
+    if (step === 2) {
+        // Validate 'moo' (หมู่ที่) - optional, but has a pattern if filled
+        const mooInput = currentStepElement.querySelector('#moo');
+        if (mooInput && mooInput.value.trim() !== '') { // Only validate if not empty
+            const mooFormGroup = mooInput.closest('.form-group');
+            const mooErrorSpan = mooFormGroup?.querySelector('.error-message');
+            const defaultMooErrorMsg = mooErrorSpan?.dataset.defaultError || "หมู่ที่รูปแบบไม่ถูกต้อง";
+            const mooPatternValid = /^[0-9]*$/.test(mooInput.value.trim()); // Check pattern specifically
+
+            mooInput.classList.toggle('invalid', !mooPatternValid);
+            mooFormGroup?.classList.toggle('invalid', !mooPatternValid);
+
+            if (mooErrorSpan) {
+                if (!mooPatternValid) {
+                    mooErrorSpan.textContent = mooInput.title || "หมู่ที่ต้องเป็นตัวเลขเท่านั้น"; // Use title for pattern error
+                    mooErrorSpan.style.display = 'block';
+                } else {
+                    mooErrorSpan.style.display = 'none';
+                    mooErrorSpan.textContent = defaultMooErrorMsg; // Reset
+                }
+            }
+            if (!mooPatternValid) {
+                isValid = false;
+                if (!firstInvalidElement) firstInvalidElement = mooInput;
+            }
+        } else if (mooInput) { // If empty, ensure it's not marked invalid from a previous attempt
+            const mooFormGroup = mooInput.closest('.form-group');
+            const mooErrorSpan = mooFormGroup?.querySelector('.error-message');
+            mooInput.classList.remove('invalid');
+            mooFormGroup?.classList.remove('invalid');
+            if (mooErrorSpan) {
+                mooErrorSpan.style.display = 'none';
+                if(mooErrorSpan.dataset.defaultError) mooErrorSpan.textContent = mooErrorSpan.dataset.defaultError;
+            }
+        }
+
+        // Validate readonly but required fields (for autofill: district, province, zipCode)
+        // These are not caught by the main `inputs` querySelector because of `not([readonly])`.
+        ['district', 'province', 'zipCode'].forEach(fieldId => {
+            const input = currentStepElement.querySelector(`#${fieldId}`);
+            if (input && input.hasAttribute('required')) {
+                const formGroup = input.closest('.form-group');
+                const errorSpan = formGroup?.querySelector('.error-message');
+                const defaultReadonlyErrorMsg = errorSpan?.dataset.defaultError || 'ข้อมูลนี้จะถูกเติมโดยอัตโนมัติ';
+                let fieldIsValid = true;
+                let specificReadonlyErrorMsg = defaultReadonlyErrorMsg;
+
+                if (input.value.trim() === '') {
+                    fieldIsValid = false;
+                    specificReadonlyErrorMsg = errorSpan?.dataset.defaultError || 'กรุณากรอกตำบลเพื่อแสดงข้อมูลนี้';
+                } else if (fieldId === 'zipCode' && !/^[0-9]{5}$/.test(input.value.trim())) {
+                    // If zipCode has a value (e.g., from failed autofill or manual edit) but doesn't match pattern
+                    fieldIsValid = false;
+                    specificReadonlyErrorMsg = input.title || "รหัสไปรษณีย์ต้องเป็นตัวเลข 5 หลัก";
+                }
+
+                input.classList.toggle('invalid', !fieldIsValid);
+                formGroup?.classList.toggle('invalid', !fieldIsValid);
+
+                if (errorSpan) {
+                    if (!fieldIsValid) {
+                        errorSpan.textContent = specificReadonlyErrorMsg;
+                        errorSpan.style.display = 'block';
+                    } else {
+                        errorSpan.style.display = 'none';
+                        errorSpan.textContent = defaultReadonlyErrorMsg; // Reset
+                    }
+                }
+
+                if (!fieldIsValid) {
+                    isValid = false;
+                    if (!firstInvalidElement) firstInvalidElement = input;
+                }
+            }
+        });
+    }
+
+    // --- Checkbox group validation (original step 8, now step 9) ---
+    if (step === 9) { // <<<< ADJUSTED STEP NUMBER from 8 to 9
+        const checkboxGroupContainer = currentStepElement.querySelector('.checkbox-group');
+        // Ensure this specific checkbox group structure exists in this step
+        if (checkboxGroupContainer && checkboxGroupContainer.querySelectorAll('input[name="learningActivities"]').length > 0) {
+            const formGroup = checkboxGroupContainer.closest('.form-group');
+            const checkboxes = checkboxGroupContainer.querySelectorAll('input[name="learningActivities"]');
+            const isAnyChecked = Array.from(checkboxes).some(cb => cb.checked);
+            const checkboxErrorSpan = formGroup?.querySelector('.error-message');
+            const defaultCheckboxErrorMsg = checkboxErrorSpan?.dataset.defaultError || 'กรุณาเลือกอย่างน้อย 1 รูปแบบ';
+
+            formGroup?.classList.toggle('invalid', !isAnyChecked);
+
+            if (checkboxErrorSpan) {
+                if (!isAnyChecked) {
+                    checkboxErrorSpan.textContent = defaultCheckboxErrorMsg;
+                    checkboxErrorSpan.style.display = 'block';
+                } else {
+                    checkboxErrorSpan.style.display = 'none';
+                    checkboxErrorSpan.textContent = defaultCheckboxErrorMsg; // Reset
+                }
+            }
+
+            if (!isAnyChecked) {
+                isValid = false;
+                // Focus the first checkbox of the group if none are selected.
+                if (!firstInvalidElement && checkboxes.length > 0) firstInvalidElement = checkboxes[0];
+            }
+        }
+    }
+    // === END OF MODIFICATIONS ===
+
+    // --- Focus on the first invalid element and apply shake animation ---
+    if (!isValid && firstInvalidElement) {
+        firstInvalidElement.focus();
+        const formGroupToShake = firstInvalidElement.closest('.form-group');
+        if (formGroupToShake) {
+            formGroupToShake.classList.add('shake');
+            setTimeout(() => {
+                formGroupToShake.classList.remove('shake');
+            }, 500);
+        }
+    }
+    return isValid;
+}
+    function nextStep() { if (validateStep(currentStep)) { if (currentStep < formSteps.length) { currentStep++; showStep(currentStep); } } }
+    function prevStep() { if (currentStep > 1) { currentStep--; showStep(currentStep); } }
+    //function handleFormSubmit(event) { event.preventDefault(); if (!validateStep(currentStep)) { console.log("Validation failed on final step."); return; } if (!submitAppsScriptUrl || submitAppsScriptUrl.includes('YOUR_DEPLOYED_WEB_APP_URL_HERE')) { Swal.fire('เกิดข้อผิดพลาด', 'ไม่ได้ตั้งค่า URL สำหรับการส่งข้อมูล (submitAppsScriptUrl) ในไฟล์ HTML', 'error'); return; } Swal.fire({ title: 'กำลังส่งข้อมูล...', text: 'กรุณารอสักครู่', allowOutsideClick: false, didOpen: () => { Swal.showLoading(); } }); submitBtn.disabled = true; const formData = new FormData(form); const checkedActivities = form.querySelectorAll('input[name="learningActivities"]:checked'); const activityValues = Array.from(checkedActivities).map(cb => cb.value); formData.set('learningActivities', activityValues.length > 0 ? activityValues.join(', ') : '-'); if (!formData.get('suggestions') || formData.get('suggestions').trim() === '') { formData.set('suggestions', '-'); } fetch(submitAppsScriptUrl, { method: 'POST', body: formData }) .then(response => { if (!response.ok) { return response.text().then(text => { let errorMsg = `HTTP ${response.status}: ${response.statusText}`; try { const jsonError = JSON.parse(text); if (jsonError && jsonError.message) errorMsg = jsonError.message; } catch (e) {} throw new Error(`ส่งข้อมูลไม่สำเร็จ: ${errorMsg}`); }); } return response.json(); }) .then(result => { console.log('Submit Response:', result); if (result && result.status === 'success') { Swal.fire({ position: "center", icon: "success", title: "ส่งข้อมูลเรียบร้อย!", text: result.message || 'ข้อมูลของคุณถูกบันทึกแล้ว', showConfirmButton: true }).then(() => { form.reset(); clearStep1Fields(true); currentStep = 1; showView('dashboard'); }); } else { throw new Error(result.message || 'ส่งข้อมูลไม่สำเร็จ (Apps Script ไม่ตอบสนองตามที่คาดหวัง)'); } }) .catch(error => { console.error('Error submitting form:', error); Swal.fire({ title: 'เกิดข้อผิดพลาด!', html: `ไม่สามารถส่งข้อมูลได้:<br><pre style="font-size:0.8em;text-align:left;background:#f8f8f8;padding:5px;border-radius:3px;margin-top:10px;white-space:pre-wrap;word-wrap:break-word;">${error.message}</pre>โปรดตรวจสอบการเชื่อมต่ออินเทอร์เน็ต หรือติดต่อผู้ดูแลระบบ`, icon: 'error', confirmButtonText: 'ปิด' }); }) .finally(() => { submitBtn.disabled = false; }); }
+	function handleFormSubmit(event) {
+    event.preventDefault();
+    if (!validateStep(currentStep)) {
+        console.log("Validation failed on final step.");
+        return;
+    }
+    if (!submitAppsScriptUrl || submitAppsScriptUrl.includes('YOUR_DEPLOYED_WEB_APP_URL_HERE') || submitAppsScriptUrl.length < 60) {
+        Swal.fire('เกิดข้อผิดพลาด', 'ไม่ได้ตั้งค่า URL สำหรับการส่งข้อมูล (submitAppsScriptUrl) ในไฟล์ HTML', 'error');
+        return;
+    }
+
+    Swal.fire({
+        title: 'ยืนยันการส่งข้อมูล',
+        text: "คุณต้องการบันทึกข้อมูลใช่หรือไม่?",
+        icon: 'question',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'ใช่, บันทึกเลย!',
+        cancelButtonText: 'ยกเลิก'
+    }).then((confirmationResult) => {
+        if (confirmationResult.isConfirmed) {
+            Swal.fire({
+                title: 'กำลังส่งข้อมูล...',
+                text: 'กรุณารอสักครู่',
+                allowOutsideClick: false,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+            submitBtn.disabled = true;
+            const formData = new FormData(form);
+            const checkedActivities = form.querySelectorAll('input[name="learningActivities"]:checked');
+            const activityValues = Array.from(checkedActivities).map(cb => cb.value);
+            formData.set('learningActivities', activityValues.length > 0 ? activityValues.join(', ') : '-');
+
+            // ตรวจสอบและตั้งค่า default ให้ suggestions ถ้าว่าง
+            // จากโค้ดเดิมของคุณมีการตรวจสอบ formData.get('suggestions') ซึ่งควรทำกับ input element โดยตรงก่อนสร้าง FormData หรือแก้ไข FormData
+            const suggestionsInput = form.querySelector('#suggestions'); // สมมติว่า id ของ textarea คือ suggestions
+            if (suggestionsInput && (!suggestionsInput.value || suggestionsInput.value.trim() === '')) {
+                 formData.set('suggestions', '-'); // หรือ  suggestionsInput.value = '-'; ก่อน const formData = new FormData(form);
+            }
+
+
+            fetch(submitAppsScriptUrl, { method: 'POST', body: formData })
+                .then(response => {
+                    if (!response.ok) {
+                        // หาก response ไม่ ok (เช่น status 4xx, 5xx)
+                        // พยายามอ่าน error message จาก text response ก่อน
+                        return response.text().then(text => {
+                            let errorMsg = `HTTP ${response.status} ${response.statusText}`; // ข้อความเริ่มต้น
+                            try {
+                                // ลอง parse เป็น JSON เผื่อ server ส่ง error message ในรูปแบบ JSON
+                                const jsonError = JSON.parse(text);
+                                if (jsonError && jsonError.message) {
+                                    errorMsg = jsonError.message;
+                                } else if (text) { // ถ้าไม่ใช่ JSON แต่มี text ก็ใช้ text นั้น (แสดงส่วนหนึ่ง)
+                                    errorMsg = text.substring(0, 500);
+                                }
+                            } catch (e) {
+                                // ถ้า parse JSON ไม่ได้ หรือไม่มี text ก็ใช้ errorMsg เดิม หรือแสดง text บางส่วน
+                                if (text) errorMsg = text.substring(0, 500);
+                            }
+                            throw new Error(`ส่งข้อมูลไม่สำเร็จ: ${errorMsg}`);
+                        });
+                    }
+                    return response.json(); // ถ้า response ok, แปลงเป็น JSON
+                })
+                .then(result => {
+                    // SweetAlert ใหม่จะขึ้นมาแทนที่ "กำลังส่งข้อมูล..." โดยอัตโนมัติ
+                    if (result && result.status === 'success') {
+                        Swal.fire({
+                            position: "center",
+                            icon: "success",
+                            title: "ส่งข้อมูลเรียบร้อย!",
+                            text: result.message || 'ข้อมูลของคุณถูกบันทึกแล้ว',
+                            showConfirmButton: true // ให้ผู้ใช้กดยืนยันเพื่อปิด
+                        }).then(() => {
+							askUserRole();
+                            form.reset();
+                            clearStep1Fields(true); // เคลียร์ฟิลด์ step 1 รวมถึง studentId
+                            currentStep = 1;
+                            showStep(currentStep); // แสดง step 1
+                            // หากต้องการกลับไปหน้า dashboard หรือโหลดข้อมูลใหม่ ให้เรียกฟังก์ชันที่เกี่ยวข้อง
+                            // เช่น showView('dashboard'); หรือ loadDashboardData();
+							
+							// ---- เริ่มโค้ดใหม่สำหรับการสร้าง PDF ทันที ----
+                            if (swalResult.isConfirmed) { // ตรวจสอบว่าผู้ใช้กดปุ่มยืนยัน (OK)
+                                const submittedStudentId = formData.get('studentId'); // ดึง studentId จาก formData
+                                if (submittedStudentId) {
+                                    // เรียกฟังก์ชัน openPdf โดยส่ง studentId และ null (เนื่องจากไม่มีปุ่มที่ถูกคลิกโดยตรง)
+                                    openPdf(submittedStudentId, null);
+                                } else {
+                                    console.error("Student ID not found in form data for PDF generation after submit.");
+                                    // (ทางเลือก) แจ้งผู้ใช้หากไม่พบ studentId
+                                    Swal.fire('ข้อผิดพลาดในการสร้าง PDF', 'ไม่พบรหัสนักเรียนหลังจากบันทึกข้อมูล กรุณาลองสร้าง PDF จากหน้า Dashboard อีกครั้ง', 'error');
+                                }
+                            }
+                            // ---- จบโค้ดใหม่สำหรับการสร้าง PDF ทันที ----
+											
+							
+                        });
+                    } else {
+                        // กรณี server ตอบกลับมาว่า status ไม่ใช่ 'success' หรือไม่มี result.message
+                        throw new Error(result.message || 'ส่งข้อมูลไม่สำเร็จ (Apps Script ไม่ตอบสนองตามที่คาดหวัง)');
+                    }
+                })
+                .catch(error => {
+                    // SweetAlert ใหม่จะขึ้นมาแทนที่ "กำลังส่งข้อมูล..."
+                    console.error('Error submitting form:', error);
+                    Swal.fire({
+                        title: 'เกิดข้อผิดพลาด!',
+                        html: `ไม่สามารถส่งข้อมูลได้:<br><pre style="font-size:0.8em;text-align:left;background:#f8f8f8;padding:5px;border-radius:3px;margin-top:10px;white-space:pre-wrap;word-wrap:break-word;">${error.message}</pre>โปรดตรวจสอบการเชื่อมต่ออินเทอร์เน็ต หรือติดต่อผู้ดูแลระบบ`,
+                        icon: 'error',
+                        confirmButtonText: 'ปิด'
+                    });
+                })
+                .finally(() => {
+                    submitBtn.disabled = false; // คืนสถานะปุ่มส่งข้อมูล
+                });
+        }
+    });
+}
+</script>
+
+<script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/JQL.min.js"></script>
+<script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dependencies/typeahead.bundle.js"></script>
+<link rel="stylesheet" href="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dist/jquery.Thailand.min.css">
+<script type="text/javascript" src="https://earthchie.github.io/jquery.Thailand.js/jquery.Thailand.js/dist/jquery.Thailand.min.js"></script>
+
+<script>
+$.Thailand({
+            $district: $('#subDistrict'),
+            $amphoe: $('#district'),
+            $province: $('#province'),
+            $zipcode: $('#zipCode'),
+            onDataFill: function(data){
+                console.log(data)
+                var html = '<b>ที่อยู่:</b> ตำบล' + data.district + ' อำเภอ' + data.amphoe + ' จังหวัด' + data.province + ' ' + data.zipcode;
+                 $('#demo2-output').html('')
+
+            },
+
+            onLoad: function () {
+                console.info('Autocomplete is ready!');
+                $('#loader, .demo').toggle();
+            }
+        });
+</script>
+
+</body>
+</html>
