@@ -420,13 +420,13 @@
 
 	async function askUserRole() {
     const { value: role } = await Swal.fire({
-        title: 'ประเภทผู้ใช้งานระบบ',
-        text: 'กรุณาเลือกบทบาทของคุณเพื่อดำเนินการต่อ',
+        title: 'ประเภทผู้ใช้งาน',
+        text: 'กรุณาเลือกประเภทผู้ใช้งาน',
         icon: 'question',
         showDenyButton: true, // ปุ่มสำหรับนักเรียน
         showConfirmButton: true, // ปุ่มสำหรับครู
-        confirmButtonText: '<i class="fas fa-chalkboard-teacher"></i> ฉันเป็นครู',
-        denyButtonText: '<i class="fas fa-user-graduate"></i> ฉันเป็นนักเรียน',
+        confirmButtonText: '<i class="fas fa-chalkboard-teacher"></i> ครู',
+        denyButtonText: '<i class="fas fa-user-graduate"></i> นักเรียน',
         confirmButtonColor: '#3085d6',
         denyButtonColor: '#06d6a0', // สีเขียวสำหรับนักเรียน
         allowOutsideClick: false,
