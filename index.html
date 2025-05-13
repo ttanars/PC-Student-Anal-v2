@@ -47,8 +47,66 @@
         }
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: 'Niramit', sans-serif; background-color: var(--background-color); color: var(--text-color); line-height: 1.6; display: flex; flex-direction: column; align-items: center; min-height: 100vh; padding: 0px; }
-        .main-container { background-color: var(--input-bg); padding: 20px 30px; border-radius: 15px; box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1); width: 100%; max-width: 1000px; /* Wider container */ border: 1px solid var(--border-color); margin-bottom: 20px; }
-        .navigation-buttons { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; }
+		
+		
+		/* --- สำหรับ html และ body --- */
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden; /* ป้องกัน scrollbar แนวนอนที่ไม่จำเป็น */
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */ /* อาจจะต้องเอาออกหรือปรับ หากต้องการให้ .container-fluid ขยายเต็มความกว้างเสมอ */
+    /* คุณมี min-height: 100vh; อยู่แล้ว ซึ่งดี */
+}
+
+/* --- สำหรับ div.container-fluid (ที่เป็นแม่ของ .card) --- */
+body > .container-fluid:first-of-type { /* เลือก .container-fluid แรกที่เป็นลูกโดยตรงของ body */
+    flex-grow: 1; /* ให้ขยายเต็มพื้นที่ flex ที่เหลือใน body */
+    display: flex;
+    flex-direction: column;
+    padding-left: 0; /* ลบ padding ซ้ายของ container-fluid */
+    padding-right: 0; /* ลบ padding ขวาของ container-fluid */
+    width: 100%; /* มั่นใจว่าเต็มความกว้าง */
+}
+
+/* --- สำหรับ .card --- */
+.card.shadow-sm.border-primary.position-relative { /* ทำให้ selector เฉพาะเจาะจงมากขึ้น */
+    flex-grow: 1; /* ให้การ์ดขยายเต็มพื้นที่ flex ที่เหลือใน .container-fluid */
+    display: flex;
+    flex-direction: column;
+    width: 100%; /* เต็มความกว้าง */
+    border-radius: 0; /* ลบมุมโค้งของการ์ดเพื่อให้ดูเต็มจอมากขึ้น */
+    border: 0; /* ลบเส้นขอบของการ์ด */
+    margin-bottom: 0 !important; /* ลบ margin ด้านล่างของการ์ด (ถ้ามาจาก .main-container เดิม) */
+}
+
+/* --- สำหรับ .card-body --- */
+.card.shadow-sm.border-primary.position-relative > .card-body {
+    flex-grow: 1; /* ให้ card-body ขยายเต็มพื้นที่ที่เหลือใน card */
+    overflow-y: auto; /* เพิ่ม scrollbar แนวตั้งถ้าเนื้อหาเกิน */
+    display: flex;
+    flex-direction: column; /* เพื่อให้เนื้อหาภายใน card-body จัดเรียงตามแนวตั้ง */
+}
+		
+		
+		
+		
+		.main-container {
+		background-color: var(--input-bg);
+		padding: 20px 30px;
+		border-radius: 15px;
+		box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+		width: 100%;
+		max-width: 100%; /* ทำให้เต็มความกว้างของหน้าจอ */
+		border: 1px solid var(--border-color);
+		margin-bottom: 20px;
+		}
+		.navigation-buttons { display: flex; justify-content: center; gap: 15px; margin-bottom: 25px; }
         .nav-button { padding: 10px 20px; font-size: 1rem; font-weight: 600; border-radius: 8px; cursor: pointer; transition: background-color 0.3s ease, transform 0.1s ease; border: 1px solid var(--secondary-color); background-color: white; color: var(--secondary-color); }
         .nav-button.active { background-color: var(--secondary-color); color: white; transform: translateY(-2px); }
         .nav-button:not(.active):hover { background-color: #e0f7fa; }
@@ -517,7 +575,7 @@
 
         // ตรวจสอบ URL ของ Web App (ควรทำครั้งเดียว)
         checkPlaceholderUrls();
-
+		document.getElementById('nav').style.display = 'none';// ซ่อนปุ่ม logout
         // Setup event listeners (ควรทำครั้งเดียว)
         if (studentIdInput) { // ตรวจสอบว่า studentIdInput ไม่ใช่ null ก่อนเพิ่ม event listener
             studentIdInput.addEventListener('blur', handleStudentIdBlur);
@@ -539,7 +597,7 @@
                 currentTeacherInfo = JSON.parse(sessionStorage.getItem('currentTeacherInfo'));
                 isLoggedIn = true; // ตั้งค่า isLoggedIn
                 if (document.getElementById('nav-logout-btn')) { // ตรวจสอบ element ก่อน
-                    document.getElementById('nav-logout-btn').style.display = 'inline-block';
+                    document.getElementById('nav-logout-btn').style.display = 'none';// ซ่อนปุ่ม logout
                 }
                 showView('dashboard'); // ถ้าครู login ค้างไว้ ให้ไปหน้า dashboard โดยตรง
 				document.getElementById('nav-form-btn').style.display = 'none'; // ซ่อนปุ่ม form
@@ -701,6 +759,7 @@ function showLoginModal() {
             handleTeacherLoginAttempt(result.value.username, result.value.password);
 			document.getElementById('nav-form-btn').style.display = 'none'; // ซ่อนปุ่ม form
 			document.getElementById('nav-dashboard-btn').style.display = 'none'; // ซ่อนปุ่ม dashboard
+			document.getElementById('nav-logout-btn').style.display = 'none'; // ซ่อนปุ่ม logout
         } else if (result.dismiss === Swal.DismissReason.cancel) {
             // ถ้าผู้ใช้กดยกเลิก อาจจะพาไปหน้า form หรือทำอย่างอื่นตามต้องการ
             //showView('form'); // ตัวอย่าง: กลับไปหน้า Form
@@ -732,12 +791,12 @@ function handleTeacherLoginAttempt(username, password) {
         })
         .then(data => {
             if (data && data.status === 'success') {
-				document.getElementById('nav-logout-btn').style.display = 'inline-block';
+				document.getElementById('nav-logout-btn').style.display = 'none';
                 isLoggedIn = true;
 				currentTeacherInfo = data.teacher;
 				sessionStorage.setItem('isTeacherLoggedIn', 'true');
 				if (currentTeacherInfo) {
-				document.getElementById('nav-logout-btn').style.display = 'inline-block';
+				document.getElementById('nav-logout-btn').style.display = 'none';
 			}
 				sessionStorage.setItem('currentTeacherInfo', JSON.stringify(currentTeacherInfo)); // เก็บเป็น JSON string
                 Swal.fire({
@@ -812,7 +871,7 @@ function logoutTeacher() {
       icon: "warning"
     });
   }
-  document.getElementById('nav-logout-btn').style.display = 'inline-block'; // ซ่อนปุ่ม Logout
+  document.getElementById('nav-logout-btn').style.display = 'none'; // ซ่อนปุ่ม Logout
 });
 }
 
@@ -1038,11 +1097,11 @@ function showImageModal(imageUrl) {
     Swal.fire({
         imageUrl: imageUrl,
         imageAlt: 'รูปนักเรียน',
-        width: '25%', // ลองเอา width ของ modal ออก หรือกำหนดเป็น % เช่น '80%' หรือ 'auto'
+        width: 'auto', // ลองเอา width ของ modal ออก หรือกำหนดเป็น % เช่น '80%' หรือ 'auto'
                         // เพื่อให้ SweetAlert2 จัดการขนาดตามรูปภาพได้ดีขึ้น
         // หรือถ้าต้องการกำหนดขนาดภาพโดยตรงใน modal
         // imageWidth: '100%', // ทำให้ภาพกว้างเต็มพื้นที่ content ของ modal
-        // imageHeight: 'auto', // รักษาสัดส่วน
+        imageHeight: 'auto', // รักษาสัดส่วน
         showConfirmButton: false, // ไม่จำเป็นต้องมีปุ่ม Confirm สำหรับดูรูป
         showCloseButton: false,    // แสดงปุ่มปิด Modal
         padding: '0.7em',        // ลด padding รอบรูปภาพ
